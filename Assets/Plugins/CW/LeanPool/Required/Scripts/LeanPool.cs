@@ -237,5 +237,6 @@ namespace Lean.Pool
 				Debug.LogWarning("You're attempting to detach a null GameObject.", clone);
 			}
 		}
-	}
+
+    }
 }

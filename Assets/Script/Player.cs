@@ -4,21 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    [SerializeField] private Weapon weaponPrefab;
-    [SerializeField] private Transform throwPoint;
     [SerializeField] private FloatingJoystick joystick;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float rotateSpeed;
-    [SerializeField] private LayerMask enemyLayer;
-    [SerializeField] private float autoAttackRange = 10f;
     private Vector3 moveVector;
     private bool hasInit;
     private Rigidbody rigidbody;
-    private float lastAutoAttackTime;
-    private Transform target;
-    private Vector3 initialEnemyPosition;
 
     private void Start()
     {
@@ -26,15 +17,15 @@ public class Player : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update() //sau neu lam update o character thi phai override va goi base.Update neu co chuc nang ca bot va nguoi lam
+    protected override void Update() //sau neu lam update o character thi phai override va goi base.Update neu co chuc nang ca bot va nguoi lam
     {
-        if(hasInit)
+        if(hasInit && IsDead == false)
         {
             Move();
-            if(moveVector == Vector3.zero && Time.time - lastAutoAttackTime >= 1f)
+            if(moveVector == Vector3.zero)
             {
+                //base.Update();
                 Attack();
-                lastAutoAttackTime = Time.time;
             }
         }   
     }
@@ -62,46 +53,62 @@ public class Player : MonoBehaviour
 
             // Allow forward movement
             rigidbody.velocity = new Vector3(moveVector.x, rigidbody.velocity.y, moveVector.z);
+            ChangeAnim("Run");
+
         }
         else if (joystick.Horizontal == 0 && joystick.Vertical == 0)
         {
             rigidbody.velocity = Vector3.zero;
-            //anim idle
+            ChangeAnim("IsIdle");
         }
     }
 
     private void Attack()
     {
-        Collider[] hitColliders = new Collider[10];
-        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
+        float cooldownDuration = 2f;
 
-        if (numEnemies > 0)
+        // Check if enough time has passed since the last attack
+        if (Time.time - lastAutoAttackTime >= cooldownDuration)
         {
-            float closestDistance = float.MaxValue;
+            Collider[] hitColliders = new Collider[10];
+            int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
 
-            for (int i = 0; i < numEnemies; i++)
+            if (numEnemies > 0)
             {
-                float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
-                if (distance < closestDistance)
+                Debug.Log("Found enemies!");
+
+                float closestDistance = float.MaxValue; //set = Max de distance giua player va enemy dau tien detected luon nho hon closestDistance ==> assign new value for closestDistance and keep checking the closest enemy detected to prioritize attacking
+                Transform nearestEnemy = null;
+
+                for (int i = 0; i < numEnemies; i++)
                 {
-                    closestDistance = distance;
-                    target = hitColliders[i].transform;
-                    initialEnemyPosition = target.position;
+                    float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
+
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        nearestEnemy = hitColliders[i].transform;
+                    }
                 }
 
-                Vector3 direction = initialEnemyPosition - transform.position;
-                direction.Normalize();
+                if (nearestEnemy != null)
+                {
+                    Vector3 direction = nearestEnemy.position - throwPoint.position;
+                    direction.Normalize();
 
-                transform.rotation = Quaternion.LookRotation(direction);
+                    transform.rotation = Quaternion.LookRotation(direction);
 
-                Weapon weapon = LeanPool.Spawn(weaponPrefab, throwPoint.position, throwPoint.rotation);
-                weapon.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
+                    ChangeAnim("IsAttack");
 
+                    Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
+                    bullet.attacker = this;
+                    bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
+
+                    // Set the cooldown timer
+                    lastAutoAttackTime = Time.time;
+                }
             }
         }
-
     }
-
-
 
 }
