@@ -28,13 +28,20 @@ public class Bot : Character
 
     protected override void Update()
     {
-        if (currentState != null)
+        if (!IsDead)
         {
-            currentState.OnExecute(this);
+            if (currentState != null)
+            {
+                currentState.OnExecute(this);
+            }
+
+            DetectEnemies();
         }
 
-        // Detect enemies and trigger attack
-        DetectEnemies();
+        //if (!IsDead)
+        //{
+        //    DetectEnemies();
+        //}
     }
 
     private void DetectEnemies()
@@ -42,6 +49,11 @@ public class Bot : Character
         // Check for enemies within the autoAttackRange
         Collider[] hitColliders = new Collider[10];
         int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
+
+        if (IsDead)
+        {
+            return;
+        }
 
         if (numEnemies > 0 && !isAttacking)
         {
@@ -107,27 +119,36 @@ public class Bot : Character
 
         // Resume patrolling
         isAttacking = false;
-        agent.isStopped = false;
-        ChangeState(new PatrolState());
+        if (!IsDead)
+        {
+            agent.isStopped = false;
+            ChangeState(new PatrolState());
+        }
+
     }
 
-    private void OnInit()
+    public void OnInit()
     {
         isAttacking = false;
+        IsDead = false;
+        gameObject.layer = 7;
         ChangeState(new PatrolState());
+
     }
 
     private void OnDespawn()
     {
+        ResetSize();
         LevelManager.Instance.DespawnBots(this);
     }
 
     protected override void OnHit()
     {
+        this.gameObject.layer = 0;
+        agent.isStopped = true;
         IsDead = true;
         ChangeAnim("IsDead");
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        Invoke(nameof(OnDespawn), 1f);
+        Invoke(nameof(OnDespawn), 2f);
 
         Transform spawnPoint = GetRandomSpawnPoint();
 
@@ -165,6 +186,8 @@ public class Bot : Character
         }
 
         currentState = state;
+        //IsDead = false;
+        //isAttacking = false;
 
         if (currentState != null)
         {

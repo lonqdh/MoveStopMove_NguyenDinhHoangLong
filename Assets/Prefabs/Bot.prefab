@@ -131,10 +131,12 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  autoAttackRange: 10
+  autoAttackRange: 5
   lastAutoAttackTime: 0
-  stopTime: 0
+  IsDead: 0
   anim: {fileID: 6347822531726337061}
+  growthFactor: 1.2
+  killCountToGrow: 5
   agent: {fileID: 4475528695441656418}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0

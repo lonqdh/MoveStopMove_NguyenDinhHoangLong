@@ -46,6 +46,8 @@ public class LevelManager : Singleton<LevelManager>
         foreach (Transform spawnPoint in botSpawnPointList)
         {
             Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
+            //newBot.gameObject.layer = 7;
+            newBot.OnInit();
             bots.Add(newBot);
         }
     }
@@ -53,6 +55,7 @@ public class LevelManager : Singleton<LevelManager>
     public void SpawnBot(Transform spawnPoint)
     {
         Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
+        newBot.OnInit();
         bots.Add(newBot);
     }
 

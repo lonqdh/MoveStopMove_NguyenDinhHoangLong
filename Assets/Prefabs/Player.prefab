@@ -262,10 +262,12 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  autoAttackRange: 10
+  autoAttackRange: 5
   lastAutoAttackTime: 0
-  stopTime: 0
+  IsDead: 0
   anim: {fileID: 2633309999104171730}
+  growthFactor: 1.2
+  killCountToGrow: 5
   joystick: {fileID: 0}
 --- !u!1001 &225291038377328003
 PrefabInstance:

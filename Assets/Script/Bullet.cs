@@ -38,16 +38,11 @@ public class Bullet : MonoBehaviour
         }
         if (collision.tag == "Enemy" || collision.tag == "Player")
         {
+            attacker.Grow();
             //collision.GetComponent<Character>().OnHit(30f);
             //Instantiate(hitVFX, transform.position, transform.rotation);
             OnDespawn();
         }
     }
-
-    //public void SetAttacker(Character attacker)
-    //{
-    //    this.attacker = attacker;
-    //}
-
 
 }

@@ -10,7 +10,7 @@ public class PatrolState : IState<Bot>
         // Initialize patrol behavior
         bot.walkPointSet = false;
         patrolTimer = 0f;
-
+        
         // Start patrolling
         Patrol(bot);
     }
@@ -29,7 +29,7 @@ public class PatrolState : IState<Bot>
 
     public void OnExit(Bot bot)
     {
-        // Cleanup or additional logic on exit
+        
     }
 
     private void Patrol(Bot bot)
@@ -47,7 +47,15 @@ public class PatrolState : IState<Bot>
                 bot.walkPointSet = false;
             }
 
-            bot.ChangeAnim("Run");
+            // Check if the bot is moving
+            if (bot.agent.velocity.magnitude > 0.1f)
+            {
+                bot.ChangeAnim("Run");
+            }
+            else
+            {
+                bot.ChangeAnim("IsIdle"); 
+            }
         }
     }
 

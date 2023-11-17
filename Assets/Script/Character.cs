@@ -1,4 +1,5 @@
 using Lean.Pool;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,25 @@ public class Character : MonoBehaviour
     [SerializeField] public float moveSpeed;
     [SerializeField] public float rotateSpeed;
     [SerializeField] public LayerMask enemyLayer;
-    [SerializeField] public float autoAttackRange = 10f;
+    [SerializeField] public float autoAttackRange = 5f;
     public float lastAutoAttackTime;
-    public float stopTime;
-    protected bool IsDead = false;
+    [SerializeField] protected bool IsDead = false;
     protected string currentAnimName;
     [SerializeField] protected Animator anim;
+
+    //Scaling
+    [SerializeField] protected float growthFactor = 1.2f;
+    [SerializeField] protected int killCountToGrow = 5;
+    protected int currentKillCount = 0;
+    protected float originalSize;
+    private float originalAttackRange;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        originalSize = transform.localScale.magnitude;
+        originalAttackRange = autoAttackRange;
         ChangeAnim("IsIdle");
     }
 
@@ -95,15 +105,22 @@ public class Character : MonoBehaviour
     protected virtual void OnDeath()
     {
         IsDead = true;
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
         ChangeAnim("IsDead");
         Invoke(nameof(OnDespawn), 2f);
     }
 
     protected virtual void OnDespawn()
     {
+        ResetSize();
         this.gameObject.SetActive(false);
         //Destroy(gameObject);
+    }
+
+    protected void ResetSize()
+    {
+        transform.localScale = originalSize * Vector3.one;
+        autoAttackRange = originalAttackRange;
+        ScaleAllChildren(transform, 1.0f);
     }
 
 
@@ -130,4 +147,35 @@ public class Character : MonoBehaviour
         }
     }
 
+    public virtual void Grow()
+    {
+        currentKillCount++;
+        // If the character has enough kills to grow
+        if (currentKillCount >= killCountToGrow)
+        {
+            // Increase size of the character
+            transform.localScale *= growthFactor;
+
+            // Increase attack range
+            autoAttackRange *= growthFactor;
+
+            ScaleAllChildren(transform, growthFactor);
+
+            // Reset kill count
+            currentKillCount = 0;
+        }
+    }
+
+    private void ScaleAllChildren(Transform parent, float scale)
+    {
+        foreach (Transform child in parent)
+        {
+            child.localScale *= scale;
+        }
+    }
+
+    //con loi khi bot spawn lai k ban
+
 }
+
+
