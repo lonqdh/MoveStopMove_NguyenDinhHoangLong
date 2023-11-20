@@ -52,6 +52,7 @@ public class Bot : Character
 
         if (IsDead)
         {
+            Debug.Log("Is Dead Cant Detect");
             return;
         }
 
@@ -138,7 +139,6 @@ public class Bot : Character
 
     private void OnDespawn()
     {
-        ResetSize();
         LevelManager.Instance.DespawnBots(this);
     }
 

@@ -2,6 +2,7 @@ using Lean.Pool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -18,19 +19,18 @@ public class Character : MonoBehaviour
     [SerializeField] protected Animator anim;
 
     //Scaling
-    [SerializeField] protected float growthFactor = 1.2f;
+    [SerializeField] public float growthFactor = 1.2f;
     [SerializeField] protected int killCountToGrow = 5;
     protected int currentKillCount = 0;
-    protected float originalSize;
-    private float originalAttackRange;
+    private BoxCollider bulletCollider;
+    //protected float originalSize;
+    //private float originalAttackRange;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        originalSize = transform.localScale.magnitude;
-        originalAttackRange = autoAttackRange;
-        ChangeAnim("IsIdle");
+        bulletCollider = bulletPrefab.GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -111,24 +111,24 @@ public class Character : MonoBehaviour
 
     protected virtual void OnDespawn()
     {
-        ResetSize();
+        //ResetSize();
         this.gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 
-    protected void ResetSize()
-    {
-        transform.localScale = originalSize * Vector3.one;
-        autoAttackRange = originalAttackRange;
-        ScaleAllChildren(transform, 1.0f);
-    }
+    //protected void ResetSize()
+    //{
+    //    transform.localScale = originalSize * Vector3.one;
+    //    autoAttackRange = originalAttackRange;
+    //    ScaleAllChildren(transform, 1.0f);
+    //}
 
 
     public void ChangeAnim(string animName)
     {
         if (currentAnimName != animName)
         {
-            anim.ResetTrigger(animName);
+            anim.ResetTrigger(currentAnimName);
             currentAnimName = animName;
             anim.SetTrigger(currentAnimName);
         }
@@ -153,10 +153,8 @@ public class Character : MonoBehaviour
         // If the character has enough kills to grow
         if (currentKillCount >= killCountToGrow)
         {
-            // Increase size of the character
             transform.localScale *= growthFactor;
 
-            // Increase attack range
             autoAttackRange *= growthFactor;
 
             ScaleAllChildren(transform, growthFactor);
@@ -172,10 +170,14 @@ public class Character : MonoBehaviour
         {
             child.localScale *= scale;
         }
+
+        bulletPrefab.ScaleForBullet(scale);
     }
 
     //con loi khi bot spawn lai k ban
+    //nguyen nhan : do ham resetsize reset attackrange thanh` 0 cho bot
 
+    //sua collider cua bullet hammer ban ra * 1.5 voi moi lan grow
 }
 
 

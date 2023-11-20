@@ -267,7 +267,7 @@ MonoBehaviour:
   IsDead: 0
   anim: {fileID: 2633309999104171730}
   growthFactor: 1.2
-  killCountToGrow: 5
+  killCountToGrow: 3
   joystick: {fileID: 0}
 --- !u!1001 &225291038377328003
 PrefabInstance:
