@@ -101,8 +101,14 @@ public class Player : Character
                     ChangeAnim("IsAttack");
 
                     Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
-                    bullet.attacker = this;
+                    //bullet.attacker = this;
+                    bullet.OnInit(this);
                     bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
+
+                    //Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
+                    //bullet.attacker = this;
+                    //bullet.OnInit(growthFactor); // Pass the growth factor of the character
+                    //bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
 
                     // Set the cooldown timer
                     lastAutoAttackTime = Time.time;

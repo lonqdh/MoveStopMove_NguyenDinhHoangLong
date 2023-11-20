@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 11.55, z: 0}
-  m_LocalScale: {x: 6.1917386, y: 6.1917386, z: 6.1917386}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2951155170968982565}
@@ -52,6 +52,7 @@ MonoBehaviour:
   bulletCollider: {fileID: 9086100519979829850}
   bullet: {fileID: 2951155170968982565}
   rotatespeed: 1000
+  despawnDelay: 2
 --- !u!54 &5515178393791703609
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -98,7 +99,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9497036, y: 0.5190048, z: 0.26673785}
+  m_Size: {x: 0, y: 0, z: 0}
   m_Center: {x: 0.043729603, y: 0.009037018, z: 0.010549203}
 --- !u!1001 &2951155170969374373
 PrefabInstance:

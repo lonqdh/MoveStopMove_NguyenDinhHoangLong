@@ -1,8 +1,6 @@
 using Lean.Pool;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
@@ -11,52 +9,79 @@ public class Bullet : MonoBehaviour
     public BoxCollider bulletCollider;
     [SerializeField] private Transform bullet;
     [SerializeField] private float rotatespeed;
-    private Vector3 maximumScale = new Vector3(3,3,3);
-    
+    private Vector3 maximumScale = new Vector3(3, 3, 3);
+
+    private Vector3 originalScale;
+    private Vector3 originalColliderSize;
+    [SerializeField] private float despawnDelay = 2f; // Adjust this value as needed
+
+    //private float currentCharScale;
 
     private void Start()
     {
+        //originalScale = transform.localScale;
+        transform.localScale = Vector3.one;
+        originalColliderSize = GetComponent<BoxCollider>().size;
         bulletCollider = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody>();
     }
+
+    private void OnEnable()
+    {
+        //ScaleForBullet();
+        Invoke("OnDespawn", despawnDelay); // phai lam onenable vi start chi 1 lan khi lan dau pool spawn, khi pool deactive va active lai ( respawn ) thi se k chay start vi da chay r
+    }
+
     private void Update()
     {
         bullet.Rotate(Vector3.up * rotatespeed * Time.deltaTime, Space.Self);
     }
 
-    public void OnInit()
+    public void OnInit(Character attacker)
     {
-
+        this.attacker = attacker;
+        ScaleForBullet();
     }
+
+    //public void OnInit()
+    //{
+
+    //}
 
     public void OnDespawn()
     {
+        transform.localScale = Vector3.one; // Reset scale to (1, 1, 1)
+        bulletCollider.size = originalColliderSize; // Reset collider size
         LeanPool.Despawn(this);
     }
 
-    public void ScaleForBullet(float growthSize)
+    public void ScaleForBullet()
     {
-        if (transform.localScale.x < maximumScale.x)
-        {
-           bulletCollider.size = new Vector3(bulletCollider.size.x, bulletCollider.size.y * growthSize, bulletCollider.size.z);
-        }
-        transform.localScale *= growthSize;
+        //currentCharScale = attacker.charScale;
+
+        transform.localScale *= attacker.charScale;
+
+        Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + transform.localScale);
+
+        bulletCollider.size = new Vector3(originalColliderSize.x, originalColliderSize.y * attacker.charScale * 2, originalColliderSize.z);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
         Character victim = collision.GetComponent<Character>();
-        if(victim == null || victim == attacker)
+        if (victim == null || victim == attacker)
         {
             return;
         }
-        if (collision.tag == "Enemy" || collision.tag == "Player")
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Player"))
         {
             attacker.Grow();
-            //collision.GetComponent<Character>().OnHit(30f);
-            //Instantiate(hitVFX, transform.position, transform.rotation);
+            // Handle other logic on collision if needed
             OnDespawn();
         }
     }
+
+    //problem: can phai khien cho bullet nhan ra duoc growth hien tai cua attacker ( nguoi ban no ) de r set scale cho chinh no dua tren growth cua ng ban no, hien tai dang bi 
+
+    //1 cach toi uu: cache enemy, kieu va cham voi thg enemy nao cho vao 1 list, ve sau check xem thg enemy minh va cham da co trong list chua
 
 }

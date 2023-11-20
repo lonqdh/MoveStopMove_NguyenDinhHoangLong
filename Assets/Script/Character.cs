@@ -23,14 +23,29 @@ public class Character : MonoBehaviour
     [SerializeField] protected int killCountToGrow = 5;
     protected int currentKillCount = 0;
     private BoxCollider bulletCollider;
+    public float charScale = 1;
+
     //protected float originalSize;
     //private float originalAttackRange;
+
+    //[SerializeField] private float minCharRatio = 1;
+    //[SerializeField] private float maxCharRatio = 3;
+    //private float charRatio;
+
+    //public float CharRatio
+    //{
+    //    get => charRatio; 
+    //    set
+    //    {
+    //        charRatio = Mathf.Clamp(value,minCharRatio,maxCharRatio);
+    //    }
+    //}
 
 
     // Start is called before the first frame update
     void Start()
     {
-        bulletCollider = bulletPrefab.GetComponent<BoxCollider>();
+
     }
 
     // Update is called once per frame
@@ -40,7 +55,7 @@ public class Character : MonoBehaviour
         //{
         //    Attack();
         //}
-        
+
     }
 
 
@@ -98,8 +113,8 @@ public class Character : MonoBehaviour
 
     protected virtual void OnHit()
     {
-        gameObject.layer = 0; // set thanh default layer de character k nham, ban toi nua
-        OnDeath();
+        //gameObject.layer = 0; // set thanh default layer de character k nham, ban toi nua
+        //OnDeath();
     }
 
     protected virtual void OnDeath()
@@ -138,11 +153,11 @@ public class Character : MonoBehaviour
     {
         if (other.CompareTag("Weapon"))
         {
-            if(other.GetComponent<Bullet>().attacker == this)
-            { 
+            if (other.GetComponent<Bullet>().attacker == this)
+            {
                 return;
             }
-            
+
             OnHit();
         }
     }
@@ -166,13 +181,21 @@ public class Character : MonoBehaviour
 
     private void ScaleAllChildren(Transform parent, float scale)
     {
-        foreach (Transform child in parent)
+        if (charScale < 2f)
         {
-            child.localScale *= scale;
-        }
+            foreach (Transform child in parent)
+            {
+                child.localScale *= scale;
+            }
 
-        bulletPrefab.ScaleForBullet(scale);
+            charScale *= growthFactor;
+        }
+        else
+        {
+            return;
+        }
     }
+
 
     //con loi khi bot spawn lai k ban
     //nguyen nhan : do ham resetsize reset attackrange thanh` 0 cho bot
