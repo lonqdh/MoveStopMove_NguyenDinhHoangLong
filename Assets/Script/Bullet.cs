@@ -80,8 +80,6 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    //problem: can phai khien cho bullet nhan ra duoc growth hien tai cua attacker ( nguoi ban no ) de r set scale cho chinh no dua tren growth cua ng ban no, hien tai dang bi 
-
     //1 cach toi uu: cache enemy, kieu va cham voi thg enemy nao cho vao 1 list, ve sau check xem thg enemy minh va cham da co trong list chua
 
 }

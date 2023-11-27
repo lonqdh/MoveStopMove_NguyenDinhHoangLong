@@ -9,30 +9,7 @@ using UnityEngine.UIElements;
 
 public class Weapon : Singleton<Weapon>
 {
-    //public Rigidbody rb;
-
-
-    private void Start()
-    {
-        //rb = GetComponent<Rigidbody>();
-        //OnInit();
-    }
-
-    private void Update()
-    {
-        
-    }
-
-    public void OnInit()
-    {
-
-    }
-
-    public void OnDespawn()
-    {
-
-    }
-
+    public WeaponType weaponType;
 }
 
 

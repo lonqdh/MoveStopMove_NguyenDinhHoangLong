@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5438c6b7f168858409d2d19bf2b01b4a, type: 3}
+  m_Name: WeaponDataSO
+  m_EditorClassIdentifier: 
+  weaponData:
+  - weaponType: 0
+    weapon: {fileID: -6061700500505149695, guid: 81cac0137fa00124b9bfa8821df45a82, type: 3}
+    bullet: {fileID: -4557092816861567676, guid: bae45964a3a731149b85d57980703e9f, type: 3}
+    autoAttackRange: 5
+  - weaponType: 1
+    weapon: {fileID: -2964895835983193631, guid: 47e6dae0bcde0f44f9b237c6a456e07d, type: 3}
+    bullet: {fileID: -1715756531405378947, guid: 611423e20ff59984bb8c8e35973c586d, type: 3}
+    autoAttackRange: 8
+  - weaponType: 2
+    weapon: {fileID: -5133585968728950636, guid: 09e8c68df1c995c4aa311280d2685eae, type: 3}
+    bullet: {fileID: 7769222489814389749, guid: 76793f57c3bad7841a2ff696a143397b, type: 3}
+    autoAttackRange: 3
+  - weaponType: 3
+    weapon: {fileID: 3833013038077306679, guid: 54572afea1c65d1488d1628e707fe985, type: 3}
+    bullet: {fileID: 6294246579076756569, guid: 693b7069dbf677d429aa54c6546727cf, type: 3}
+    autoAttackRange: 5
+  - weaponType: 4
+    weapon: {fileID: -2140409884273666036, guid: 26afeb1dbf5564e419a661ed8d08475c, type: 3}
+    bullet: {fileID: 166936737936360699, guid: d23367b7f190888499863f1f17a917c1, type: 3}
+    autoAttackRange: 12

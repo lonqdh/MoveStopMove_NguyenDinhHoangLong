@@ -9,7 +9,7 @@ public class IdleState : IState<Bot>
     public void OnEnter(Bot bot)
     {
         bot.ChangeAnim("IsIdle");
-        bot.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        bot.agent.SetDestination(bot.transform.position);
         timer = 0;
         randomTime = Random.Range(2f, 4f);
     }

@@ -7,12 +7,13 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField] public Bullet bulletPrefab;
+    //[SerializeField] public Weapon weapon;
+    //[SerializeField] public Bullet bulletPrefab;
     [SerializeField] public Transform throwPoint;
     [SerializeField] public float moveSpeed;
     [SerializeField] public float rotateSpeed;
     [SerializeField] public LayerMask enemyLayer;
-    [SerializeField] public float autoAttackRange = 5f;
+    //[SerializeField] public float autoAttackRange = 5f;
     public float lastAutoAttackTime;
     [SerializeField] protected bool IsDead = false;
     protected string currentAnimName;
@@ -25,27 +26,15 @@ public class Character : MonoBehaviour
     private BoxCollider bulletCollider;
     public float charScale = 1;
 
-    //protected float originalSize;
-    //private float originalAttackRange;
-
-    //[SerializeField] private float minCharRatio = 1;
-    //[SerializeField] private float maxCharRatio = 3;
-    //private float charRatio;
-
-    //public float CharRatio
-    //{
-    //    get => charRatio; 
-    //    set
-    //    {
-    //        charRatio = Mathf.Clamp(value,minCharRatio,maxCharRatio);
-    //    }
-    //}
+    public Bullet bulletPrefab;
+    public WeaponData weaponData;
+    private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-
+        //OnInit();
     }
 
     // Update is called once per frame
@@ -58,58 +47,21 @@ public class Character : MonoBehaviour
 
     }
 
+    internal virtual void OnInit()
+    {
+        if(weaponData == null)
+        {
+            weaponData = DataManager.Instance.GetWeaponData(defaultCurrentWeapon);
+            Debug.Log("Stupid Dumbass : " + weaponData.weaponType + " , " + weaponData.autoAttackRange);
+        }
+        if(weaponData.bullet != null)
+        {
+            bulletPrefab = weaponData.bullet;
+        }
+        
 
-    //private void Attack()
-    //{
-    //    float cooldownDuration = 2f;
+    }
 
-    //    // Check if enough time has passed since the last attack
-    //    if (Time.time - lastAutoAttackTime >= cooldownDuration)
-    //    {
-    //        Collider[] hitColliders = new Collider[10];
-    //        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
-
-    //        if (numEnemies > 0)
-    //        {
-    //            Debug.Log("Found enemies!");
-
-    //            float closestDistance = float.MaxValue; //set = Max de distance giua player va enemy dau tien detected luon nho hon closestDistance ==> assign new value for closestDistance and keep checking the closest enemy detected to prioritize attacking
-    //            Transform nearestEnemy = null;
-
-    //            for (int i = 0; i < numEnemies; i++)
-    //            {
-    //                float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
-
-    //                if (distance < closestDistance)
-    //                {
-    //                    closestDistance = distance;
-    //                    nearestEnemy = hitColliders[i].transform;
-    //                }
-    //            }
-
-    //            if (nearestEnemy != null)
-    //            {
-    //                Vector3 direction = nearestEnemy.position - throwPoint.position;
-    //                direction.Normalize();
-
-    //                transform.rotation = Quaternion.LookRotation(direction);
-
-    //                ChangeAnim("IsAttack");
-
-    //                Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
-    //                bullet.attacker = this; 
-    //                bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
-
-    //                // Set the cooldown timer
-    //                lastAutoAttackTime = Time.time;
-    //            }
-    //            else
-    //            {
-    //                return;
-    //            }
-    //        }
-    //    }
-    //}
 
     protected virtual void OnHit()
     {
@@ -130,14 +82,6 @@ public class Character : MonoBehaviour
         this.gameObject.SetActive(false);
         //Destroy(gameObject);
     }
-
-    //protected void ResetSize()
-    //{
-    //    transform.localScale = originalSize * Vector3.one;
-    //    autoAttackRange = originalAttackRange;
-    //    ScaleAllChildren(transform, 1.0f);
-    //}
-
 
     public void ChangeAnim(string animName)
     {
@@ -170,7 +114,7 @@ public class Character : MonoBehaviour
         {
             transform.localScale *= growthFactor;
 
-            autoAttackRange *= growthFactor;
+            weaponData.autoAttackRange *= growthFactor;
 
             ScaleAllChildren(transform, growthFactor);
 

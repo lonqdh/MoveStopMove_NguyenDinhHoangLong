@@ -30,8 +30,9 @@ public class Player : Character
         }   
     }
 
-    public void OnInit()
+    internal override void OnInit()
     {
+        base.OnInit();
         joystick = LevelManager.Instance.joystick;
         CameraFollow.Instance.target = transform;
         hasInit = true;
@@ -71,7 +72,7 @@ public class Player : Character
         if (Time.time - lastAutoAttackTime >= cooldownDuration)
         {
             Collider[] hitColliders = new Collider[10];
-            int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
+            int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
 
             if (numEnemies > 0)
             {
@@ -100,7 +101,7 @@ public class Player : Character
 
                     ChangeAnim("IsAttack");
 
-                    Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
+                    Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
                     //bullet.attacker = this;
                     bullet.OnInit(this);
                     bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;

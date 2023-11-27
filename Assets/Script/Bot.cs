@@ -48,7 +48,7 @@ public class Bot : Character
     {
         // Check for enemies within the autoAttackRange
         Collider[] hitColliders = new Collider[10];
-        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, autoAttackRange, hitColliders, enemyLayer);
+        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
 
         if (IsDead)
         {
@@ -78,7 +78,7 @@ public class Bot : Character
             {
                 // Stop moving
                 agent.isStopped = true;
-                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                agent.SetDestination(transform.position);
                 ChangeAnim("IsIdle");
 
                 Vector3 direction = nearestEnemy.position - throwPoint.position;
@@ -101,7 +101,7 @@ public class Bot : Character
         {
             ChangeAnim("IsAttack");
 
-            Bullet bullet = LeanPool.Spawn(bulletPrefab, throwPoint.position, throwPoint.rotation);
+            Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
             //bullet.attacker = this;
             bullet.OnInit(this);
             //bullet.OnInit(growthFactor); // Pass the growth factor of the
@@ -132,7 +132,7 @@ public class Bot : Character
 
     }
 
-    public void OnInit()
+    internal override void OnInit()
     {
         isAttacking = false;
         IsDead = false;
