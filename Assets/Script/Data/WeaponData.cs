@@ -19,4 +19,16 @@ public class WeaponData
     public Weapon weapon;
     public Bullet bullet;
     public float autoAttackRange;
+
+    // Clone the WeaponData
+    public WeaponData Clone()
+    {
+        return new WeaponData
+        {
+            weaponType = this.weaponType,
+            weapon = this.weapon,
+            bullet = this.bullet,
+            autoAttackRange = this.autoAttackRange
+        };
+    }
 }

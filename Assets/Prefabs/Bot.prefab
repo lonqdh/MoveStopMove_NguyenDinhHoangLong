@@ -124,19 +124,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a087a41f2121b0469c91437f42d7f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1361427015750629023, guid: 7c2a2405da5829a4dac298206b1b9a51, type: 3}
+  bulletPrefab: {fileID: 0}
   throwPoint: {fileID: 2353246817582222908}
   moveSpeed: 3
   rotateSpeed: 5
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  autoAttackRange: 5
   lastAutoAttackTime: 0
   IsDead: 0
   anim: {fileID: 6347822531726337061}
   growthFactor: 1.2
   killCountToGrow: 5
+  charScale: 1
+  weaponData:
+    weaponType: 0
+    weapon: {fileID: 0}
+    bullet: {fileID: 0}
+    autoAttackRange: 0
   agent: {fileID: 4475528695441656418}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0

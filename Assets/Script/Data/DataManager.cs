@@ -13,7 +13,8 @@ public class DataManager : Singleton<DataManager>
         {
             if(weaponType == weaponData[i].weaponType)
             {
-                return weaponData[i];
+                //return weaponData[i];
+                return weaponData[i].Clone();
             }
         }
 

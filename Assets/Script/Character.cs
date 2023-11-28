@@ -8,7 +8,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     //[SerializeField] public Weapon weapon;
-    //[SerializeField] public Bullet bulletPrefab;
+    [SerializeField] public Bullet bulletPrefab;
     [SerializeField] public Transform throwPoint;
     [SerializeField] public float moveSpeed;
     [SerializeField] public float rotateSpeed;
@@ -26,7 +26,6 @@ public class Character : MonoBehaviour
     private BoxCollider bulletCollider;
     public float charScale = 1;
 
-    public Bullet bulletPrefab;
     public WeaponData weaponData;
     private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
 
@@ -49,17 +48,15 @@ public class Character : MonoBehaviour
 
     internal virtual void OnInit()
     {
-        if(weaponData == null)
+        if (weaponData != null)
         {
             weaponData = DataManager.Instance.GetWeaponData(defaultCurrentWeapon);
-            Debug.Log("Stupid Dumbass : " + weaponData.weaponType + " , " + weaponData.autoAttackRange);
+            Debug.Log("Weapon Type: " + weaponData.weaponType + ", Auto Attack Range: " + weaponData.autoAttackRange);
         }
-        if(weaponData.bullet != null)
+        if (weaponData.bullet != null)
         {
             bulletPrefab = weaponData.bullet;
         }
-        
-
     }
 
 

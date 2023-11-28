@@ -134,6 +134,7 @@ public class Bot : Character
 
     internal override void OnInit()
     {
+        base.OnInit();
         isAttacking = false;
         IsDead = false;
         gameObject.layer = 7;
