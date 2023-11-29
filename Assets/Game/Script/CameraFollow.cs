@@ -13,8 +13,7 @@ public class CameraFollow : Singleton<CameraFollow>
 
     private void Start()
     {
-        //desiredPosition = target.position + offset;
-        //smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+        
     }
 
     private void LateUpdate()

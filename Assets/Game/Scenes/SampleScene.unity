@@ -526,7 +526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &739099387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 2094654466}
   botPrefab: {fileID: -8695420339889194576, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
-  playerPrefab: {fileID: 3615325495062849891, guid: bd6f80aa4e2d9704cb6eb3494544a9d8, type: 3}
+  playerPrefab: {fileID: 1477980586899138716, guid: 476d81936a9300d40b6d4164e9f467e5, type: 3}
   planeTransform: {fileID: 756637771}
   botSpawnPointList:
   - {fileID: 1081665771}

@@ -20,7 +20,9 @@ public class Bullet : MonoBehaviour
     private void Start()
     {
         //originalScale = transform.localScale;
-        transform.localScale = Vector3.one;
+        //transform.localScale = Vector3.one;
+        //OnInit();
+        //rb = GetComponent<Rigidbody>(); Cache kieu 1
         originalColliderSize = GetComponent<BoxCollider>().size;
         bulletCollider = GetComponent<BoxCollider>();
     }
@@ -45,6 +47,12 @@ public class Bullet : MonoBehaviour
     //public void OnInit()
     //{
 
+    //    ScaleForBullet();
+    //}
+
+    //public void OnInit()
+    //{
+
     //}
 
     public void OnDespawn()
@@ -61,13 +69,12 @@ public class Bullet : MonoBehaviour
         transform.localScale *= attacker.charScale;
 
         Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + transform.localScale);
-
-        bulletCollider.size = new Vector3(originalColliderSize.x, originalColliderSize.y * attacker.charScale * 2, originalColliderSize.z);
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        Character victim = collision.GetComponent<Character>();
+        //Character victim = collision.GetComponent<Character>();
+        Character victim = Cache.GetCharacter(collision); //Cache kieu 2
         if (victim == null || victim == attacker)
         {
             return;
@@ -82,4 +89,9 @@ public class Bullet : MonoBehaviour
 
     //1 cach toi uu: cache enemy, kieu va cham voi thg enemy nao cho vao 1 list, ve sau check xem thg enemy minh va cham da co trong list chua
 
+    //problem: khi grow thi ban dan k cham  toi other characters
+
+    //task : lam spin bullet
+
+    //task : lam call back
 }

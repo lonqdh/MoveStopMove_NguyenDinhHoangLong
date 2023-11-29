@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3669663189519876696}
   - component: {fileID: 1344276516935429528}
-  - component: {fileID: 8609087860578793854}
   - component: {fileID: -55799238421797015}
   m_Layer: 0
   m_Name: Boomerang
@@ -56,33 +55,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8548279, y: 0.18606234, z: 1}
   m_Center: {x: 0.5003605, y: 0.027177572, z: 0}
---- !u!54 &8609087860578793854
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7692718799277577462}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!114 &-55799238421797015
 MonoBehaviour:
   m_ObjectHideFlags: 0

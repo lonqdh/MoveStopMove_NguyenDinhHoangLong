@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
 
     [SerializeField] protected WeaponData weaponData;
     [SerializeField] private Transform weaponHoldingPos;
-    private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
+    private WeaponType defaultCurrentWeapon = WeaponType.Axe;
 
 
 

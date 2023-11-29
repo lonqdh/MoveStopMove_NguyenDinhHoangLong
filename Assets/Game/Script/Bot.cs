@@ -107,8 +107,6 @@ public class Bot : Character
             //bullet.OnInit(growthFactor); // Pass the growth factor of the
             bullet.GetComponent<Rigidbody>().velocity = (target.position - throwPoint.position).normalized * 5f;
 
-            
-
             // Set the cooldown timer
             lastAutoAttackTime = Time.time;
 
