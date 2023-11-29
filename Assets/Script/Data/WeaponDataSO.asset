@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDataList:
   - weaponType: 0
-    weapon: {fileID: -6061700500505149695, guid: 81cac0137fa00124b9bfa8821df45a82, type: 3}
-    bullet: {fileID: -4557092816861567676, guid: bae45964a3a731149b85d57980703e9f, type: 3}
+    weapon: {fileID: 4206937529199093107, guid: 8164bdf695ee47d439879ef5b9d4649e, type: 3}
+    bullet: {fileID: 4061690055724563168, guid: b724e4b16d14f854fb965412ea303c5f, type: 3}
     autoAttackRange: 5
   - weaponType: 1
-    weapon: {fileID: -2964895835983193631, guid: 47e6dae0bcde0f44f9b237c6a456e07d, type: 3}
-    bullet: {fileID: -1715756531405378947, guid: 611423e20ff59984bb8c8e35973c586d, type: 3}
+    weapon: {fileID: -55799238421797015, guid: 681c62e9d8147d64c8d34921c3788a88, type: 3}
+    bullet: {fileID: 8449882346181466404, guid: 8e69392e966ec364f9dd2d924045ce63, type: 3}
     autoAttackRange: 10
   - weaponType: 3
-    weapon: {fileID: 3833013038077306679, guid: 54572afea1c65d1488d1628e707fe985, type: 3}
+    weapon: {fileID: -7358084803491230798, guid: e65d1021f00cb6344a8b62d15c40961d, type: 3}
     bullet: {fileID: 784264894025016001, guid: ae41b9e6bcbb99241a03a6d84a3f8b7b, type: 3}
     autoAttackRange: 5

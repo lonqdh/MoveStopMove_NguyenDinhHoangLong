@@ -26,8 +26,10 @@ public class Character : MonoBehaviour
     private BoxCollider bulletCollider;
     public float charScale = 1;
 
-    public WeaponData weaponData;
+    [SerializeField] protected WeaponData weaponData;
+    [SerializeField] private Transform weaponHoldingPos;
     private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
+
 
 
     // Start is called before the first frame update
@@ -51,7 +53,9 @@ public class Character : MonoBehaviour
         if (weaponData != null)
         {
             weaponData = DataManager.Instance.GetWeaponData(defaultCurrentWeapon);
-            Debug.Log("Weapon Type: " + weaponData.weaponType + ", Auto Attack Range: " + weaponData.autoAttackRange);
+            Debug.Log("Char: " + this.name + " Weapon Type: " + weaponData.weaponType + ", Auto Attack Range: " + weaponData.autoAttackRange);
+            Weapon weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
+            weaponInstance.transform.parent = weaponHoldingPos;
         }
         if (weaponData.bullet != null)
         {

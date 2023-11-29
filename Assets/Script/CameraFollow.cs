@@ -7,12 +7,25 @@ public class CameraFollow : Singleton<CameraFollow>
     public Transform target; // The character's transform
     public float smoothSpeed = 5.0f;
     public Vector3 offset;
+    Vector3 desiredPosition;
+    Vector3 smoothedPosition;
+
+
+    private void Start()
+    {
+        //desiredPosition = target.position + offset;
+        //smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+    }
 
     private void LateUpdate()
     {
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
-        transform.position = smoothedPosition;
-        transform.LookAt(target);
+        if (target != null)
+        {
+            desiredPosition = target.position + offset;
+            smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
+            transform.position = smoothedPosition;
+            transform.LookAt(target);
+        }
+        
     }
 }
