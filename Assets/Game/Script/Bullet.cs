@@ -6,36 +6,40 @@ public class Bullet : MonoBehaviour
 {
     public Rigidbody rb;
     public Character attacker;
-    public BoxCollider bulletCollider;
-    [SerializeField] private Transform bullet;
-    [SerializeField] private float rotatespeed;
+    public MeshCollider bulletCollider;
+    //[SerializeField] private Transform bullet;
+    [SerializeField] private float rotatespeed = 180f;
     private Vector3 maximumScale = new Vector3(3, 3, 3);
 
-    private Vector3 originalScale;
-    private Vector3 originalColliderSize;
-    [SerializeField] private float despawnDelay = 2f; // Adjust this value as needed
+    [SerializeField] private float despawnDelay = 2f; 
 
     //private float currentCharScale;
 
     private void Start()
     {
-        //originalScale = transform.localScale;
-        //transform.localScale = Vector3.one;
-        //OnInit();
         //rb = GetComponent<Rigidbody>(); Cache kieu 1
-        originalColliderSize = GetComponent<BoxCollider>().size;
-        bulletCollider = GetComponent<BoxCollider>();
+
+        
     }
 
     private void OnEnable()
     {
         //ScaleForBullet();
-        Invoke("OnDespawn", despawnDelay); // phai lam onenable vi start chi 1 lan khi lan dau pool spawn, khi pool deactive va active lai ( respawn ) thi se k chay start vi da chay r
+        /*Invoke("OnDespawn", despawnDelay);*/ // phai lam onenable vi start chi 1 lan khi lan dau pool spawn, khi pool deactive va active lai ( respawn ) thi se k chay start vi da chay r
     }
 
     private void Update()
     {
-        bullet.Rotate(Vector3.up * rotatespeed * Time.deltaTime, Space.Self);
+        //transform.Rotate(Vector3.forward, rotatespeed * Time.deltaTime);
+
+        transform.Rotate(Vector3.up, rotatespeed * Time.deltaTime);
+
+        float distanceFromAttacker = Vector3.Distance(transform.position, attacker.transform.position);
+
+        if (distanceFromAttacker > attacker.weaponData.autoAttackRange)
+        {
+            OnDespawn();
+        }
     }
 
     public void OnInit(Character attacker)
@@ -44,22 +48,13 @@ public class Bullet : MonoBehaviour
         ScaleForBullet();
     }
 
-    //public void OnInit()
-    //{
-
-    //    ScaleForBullet();
-    //}
-
-    //public void OnInit()
-    //{
-
-    //}
-
     public void OnDespawn()
     {
-        transform.localScale = Vector3.one; // Reset scale to (1, 1, 1)
-        bulletCollider.size = originalColliderSize; // Reset collider size
-        LeanPool.Despawn(this);
+        if (this != null)
+        {
+            transform.localScale = Vector3.one; // Reset scale to (1, 1, 1)
+            LeanPool.Despawn(this);
+        }
     }
 
     public void ScaleForBullet()

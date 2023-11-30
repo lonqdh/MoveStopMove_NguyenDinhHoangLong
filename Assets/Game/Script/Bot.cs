@@ -15,6 +15,7 @@ public class Bot : Character
     public float walkPointRange;
 
     public bool isAttacking;
+    public GameObject targetCircle;
 
     private void Awake()
     {
@@ -28,8 +29,10 @@ public class Bot : Character
 
     protected override void Update()
     {
+
         if (!IsDead)
         {
+            //base.Update();
             if (currentState != null)
             {
                 currentState.OnExecute(this);
@@ -86,8 +89,9 @@ public class Bot : Character
 
                 transform.rotation = Quaternion.LookRotation(direction);
 
-                // Trigger attack
+
                 Attack(nearestEnemy);
+
             }
         }
     }
@@ -135,34 +139,45 @@ public class Bot : Character
         base.OnInit();
         isAttacking = false;
         IsDead = false;
-        gameObject.layer = 7;
+        this.gameObject.layer = 7;
         ChangeState(new PatrolState());
 
     }
 
     private void OnDespawn()
     {
-        LevelManager.Instance.DespawnBots(this);
+        LevelManager.Instance.DespawnBot(this);
+        Transform spawnPoint = GetRandomSpawnPoint();
+
+        if (spawnPoint != null)
+        {
+            LevelManager.Instance.SpawnSingleBot(spawnPoint);
+        }
+        else
+        {
+            Debug.LogError("No valid spawn points available.");
+        }
     }
 
     protected override void OnHit()
     {
+        this.targetCircle.SetActive(false);
         this.gameObject.layer = 0;
         agent.isStopped = true;
         IsDead = true;
         ChangeAnim("IsDead");
         Invoke(nameof(OnDespawn), 2f);
 
-        Transform spawnPoint = GetRandomSpawnPoint();
+        //Transform spawnPoint = GetRandomSpawnPoint();
 
-        if (spawnPoint != null)
-        {
-            LevelManager.Instance.SpawnBot(spawnPoint);
-        }
-        else
-        {
-            Debug.LogError("No valid spawn points available.");
-        }
+        //if (spawnPoint != null)
+        //{
+        //    LevelManager.Instance.SpawnSingleBot(spawnPoint);
+        //}
+        //else
+        //{
+        //    Debug.LogError("No valid spawn points available.");
+        //}
     }
 
     private Transform GetRandomSpawnPoint()

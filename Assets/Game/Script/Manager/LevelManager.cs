@@ -37,11 +37,11 @@ public class LevelManager : Singleton<LevelManager>
         player.OnInit();
         player.transform.position = playerSpawnPoint.position;
 
-        SpawnBots();
+        SpawnBotsAtStart();
 
     }
 
-    public void SpawnBots()
+    public void SpawnBotsAtStart()
     {
         foreach (Transform spawnPoint in botSpawnPointList)
         {
@@ -49,21 +49,31 @@ public class LevelManager : Singleton<LevelManager>
             //newBot.gameObject.layer = 7;
             newBot.OnInit();
             bots.Add(newBot);
+
         }
     }
 
-    public void SpawnBot(Transform spawnPoint)
+    public void SpawnSingleBot(Transform spawnPoint)
     {
         Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
         newBot.OnInit();
         bots.Add(newBot);
     }
 
-    public void DespawnBots(Bot bot)
+    public void DespawnBot(Bot bot)
     {
-        LeanPool.Despawn(bot);
-        bots.Remove(bot);
+        if (bot != null && bots.Contains(bot))
+        {
+            bots.Remove(bot);
+            LeanPool.Despawn(bot);
+            
+        }
+        else
+        {
+            Debug.LogError("Attempting to despawn a null bot.");
+        }
     }
+
 
 
 }

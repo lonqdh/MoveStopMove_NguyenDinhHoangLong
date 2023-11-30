@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
+using UnityEditor;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -26,9 +27,9 @@ public class Character : MonoBehaviour
     private BoxCollider bulletCollider;
     public float charScale = 1;
 
-    [SerializeField] protected WeaponData weaponData;
+    [SerializeField] internal WeaponData weaponData;
     [SerializeField] private Transform weaponHoldingPos;
-    private WeaponType defaultCurrentWeapon = WeaponType.Axe;
+    private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
 
 
 
@@ -46,6 +47,7 @@ public class Character : MonoBehaviour
         //    Attack();
         //}
 
+        //OnDrawGizmosSelected();
     }
 
     internal virtual void OnInit()
@@ -81,7 +83,6 @@ public class Character : MonoBehaviour
     {
         //ResetSize();
         this.gameObject.SetActive(false);
-        //Destroy(gameObject);
     }
 
     public void ChangeAnim(string animName)
@@ -141,11 +142,22 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        if (weaponData != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, weaponData.autoAttackRange);
+        }
+    }
 
     //con loi khi bot spawn lai k ban
     //nguyen nhan : do ham resetsize reset attackrange thanh` 0 cho bot
 
     //sua collider cua bullet hammer ban ra * 1.5 voi moi lan grow
+
+    //task : set attack range cho char dua tren weapondata, kphai thay doi attackrange cua weapondata --> kphai clone new weapondata cho moi char
+
 }
 
 

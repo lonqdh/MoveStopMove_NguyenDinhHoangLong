@@ -526,7 +526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &739099387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,12 +539,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea08375da243a441b88d1e6b0713006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6988561778236083823, guid: ae41b9e6bcbb99241a03a6d84a3f8b7b, type: 3}
+  prefab: {fileID: 1289326922836069735, guid: 0d99b6d25cf911b41ba7adeec1ad84c0, type: 3}
   notification: 3
   strategy: 0
   preload: 5
-  capacity: 5
-  recycle: 1
+  capacity: 100
+  recycle: 0
   persist: 0
   stamp: 0
   warnings: 1
@@ -643,7 +643,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 37f0a3339557ae74c8264a341e9b0690, type: 2}
+  - {fileID: 2100000, guid: 31b775b9a5dcfda45ab85fd7bdf7a820, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -673,6 +673,71 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756637770}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &768103965
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2357890124318124261, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.802062
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 9.83651
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -15.348036
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2607872464117100734, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925439429372303755, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8466377537335883871, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
+      propertyPath: m_Name
+      value: Bot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
 --- !u!1 &840489853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,9 +1495,9 @@ MonoBehaviour:
   prefab: {fileID: 8466377537335883871, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
   notification: 3
   strategy: 0
-  preload: 2
-  capacity: 10
-  recycle: 0
+  preload: 3
+  capacity: 100
+  recycle: 1
   persist: 0
   stamp: 0
   warnings: 1
@@ -1843,3 +1908,4 @@ SceneRoots:
   - {fileID: 408312256}
   - {fileID: 739099388}
   - {fileID: 1670397175}
+  - {fileID: 768103965}
