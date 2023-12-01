@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    public FloatingJoystick joystick;
     [SerializeField] public Bot botPrefab;
     [SerializeField] private Player playerPrefab;
     [NonSerialized] public Player player;
@@ -15,14 +14,14 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] public Transform planeTransform;
     [SerializeField] public List<Transform> botSpawnPointList;
     [SerializeField] private Transform playerSpawnPoint;
-
-
+    public FloatingJoystick joystick;
+    
 
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadLevel();
+        //LoadLevel();
     }
 
     // Update is called once per frame
@@ -33,12 +32,19 @@ public class LevelManager : Singleton<LevelManager>
 
     private void LoadLevel()
     {
-        player = Instantiate(playerPrefab);
+        //player = Instantiate(playerPrefab);
+        player = playerPrefab;
         player.OnInit();
         player.transform.position = playerSpawnPoint.position;
 
         SpawnBotsAtStart();
 
+    }
+
+    public void OnStart()
+    {
+        GameManager.Instance.ChangeState(GameState.Gameplay);
+        LoadLevel();
     }
 
     public void SpawnBotsAtStart()

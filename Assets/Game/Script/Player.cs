@@ -15,7 +15,11 @@ public class Player : Character
 
     private void Start()
     {
-        OnInit();
+        if(GameManager.Instance.IsState(GameState.Gameplay))
+        {
+            OnInit();
+        }
+        
         //rigidbody = GetComponent<Rigidbody>();
     }
 
