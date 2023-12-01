@@ -39,6 +39,12 @@ public class Bot : Character
                 currentState.OnExecute(this);
             }
 
+            //thang duoi nay de freeze bot until vao game
+            //if (currentState != null && GameManager.Instance.IsState(GameState.Gameplay))
+            //{
+            //    currentState.OnExecute(this);
+            //}
+
             DetectEnemies();
         }
     }
