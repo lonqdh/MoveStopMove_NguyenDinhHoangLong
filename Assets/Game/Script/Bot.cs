@@ -7,19 +7,20 @@ using UnityEngine.AI;
 public class Bot : Character
 {
     private IState<Bot> currentState;
-
+    private int botLayerNumber = 7;
+    //private Bullet bullet;
+    
     public NavMeshAgent agent;
-
     public Vector3 walkPoint;
     public bool walkPointSet;
     public float walkPointRange;
-
     public bool isAttacking;
     public GameObject targetCircle;
 
+
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+
     }
 
     private void Start()
@@ -40,11 +41,6 @@ public class Bot : Character
 
             DetectEnemies();
         }
-
-        //if (!IsDead)
-        //{
-        //    DetectEnemies();
-        //}
     }
 
     private void DetectEnemies()
@@ -55,14 +51,11 @@ public class Bot : Character
 
         if (IsDead)
         {
-            Debug.Log("Is Dead Cant Detect");
             return;
         }
 
         if (numEnemies > 0 && !isAttacking)
         {
-            Debug.Log("Found enemies!");
-
             float closestDistance = float.MaxValue;
             Transform nearestEnemy = null;
 
@@ -81,7 +74,7 @@ public class Bot : Character
             {
                 // Stop moving
                 agent.isStopped = true;
-                agent.SetDestination(transform.position);
+                //agent.SetDestination(transform.position); // dung cai nay doc lap thi se bi loi bot dung yen lai ban xong di chuyen luon, va dung cai nay se loi khi nvat dung lai se slide di
                 ChangeAnim("IsIdle");
 
                 Vector3 direction = nearestEnemy.position - throwPoint.position;
@@ -108,8 +101,7 @@ public class Bot : Character
             Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
             //bullet.attacker = this;
             bullet.OnInit(this);
-            //bullet.OnInit(growthFactor); // Pass the growth factor of the
-            bullet.GetComponent<Rigidbody>().velocity = (target.position - throwPoint.position).normalized * 5f;
+            bullet.bulletRigidbody.velocity = (target.position - throwPoint.position).normalized * 5f;
 
             // Set the cooldown timer
             lastAutoAttackTime = Time.time;
@@ -124,7 +116,6 @@ public class Bot : Character
     {
         yield return new WaitForSeconds(2f);
 
-        // Resume patrolling
         isAttacking = false;
         if (!IsDead)
         {
@@ -139,7 +130,7 @@ public class Bot : Character
         base.OnInit();
         isAttacking = false;
         IsDead = false;
-        this.gameObject.layer = 7;
+        this.gameObject.layer = botLayerNumber;
         ChangeState(new PatrolState());
 
     }
@@ -162,7 +153,7 @@ public class Bot : Character
     protected override void OnHit()
     {
         this.targetCircle.SetActive(false);
-        this.gameObject.layer = 0;
+        this.gameObject.layer = defaultLayerNumber;
         agent.isStopped = true;
         IsDead = true;
         ChangeAnim("IsDead");
@@ -184,7 +175,6 @@ public class Bot : Character
     {
         List<Transform> spawnPoints = LevelManager.Instance.botSpawnPointList;
 
-        // If there are available spawn points, use one of them
         if (spawnPoints.Count > 0)
         {
             int randomIndex = Random.Range(0, spawnPoints.Count);

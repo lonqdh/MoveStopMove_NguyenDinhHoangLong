@@ -98,6 +98,7 @@ MonoBehaviour:
   rb: {fileID: 4743817982062972082}
   attacker: {fileID: 0}
   bulletCollider: {fileID: 3403274217270066572}
+  bulletRigidbody: {fileID: 4743817982062972082}
   rotatespeed: 180
   despawnDelay: 2
 --- !u!64 &3403274217270066572

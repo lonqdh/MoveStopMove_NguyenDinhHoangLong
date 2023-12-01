@@ -10,7 +10,7 @@ public class Player : Character
     [SerializeField] private Rigidbody rigidbody;
     private Vector3 moveVector;
     private bool hasInit;
-
+    //private List<Collider> hitColliders = new List<Collider>();
     public GameObject attackRangeCircle;
 
     private void Start()
@@ -64,104 +64,149 @@ public class Player : Character
         }
     }
 
+    //private void DetectEnemies()
+    //{
+
+    //    // Check for enemies within the autoAttackRange
+    //    Collider[] hitColliders = new Collider[100];
+    //    int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
+
+    //    if (IsDead)
+    //    {
+    //        Debug.Log("Dead cant detect");
+    //        return;
+    //    }
+
+    //    //if (numEnemies > 0)
+    //    //{
+    //    //    float closestDistance = 100f;
+    //    //    Transform nearestEnemy = null;
+
+
+    //    //    for (int i = 0; i < numEnemies; i++)
+    //    //    {
+    //    //        float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
+    //    //        hitColliders[i].GetComponent<Bot>().targetCircle.SetActive(true);
+
+    //    //        if (distance < closestDistance)
+    //    //        {
+    //    //            closestDistance = distance;
+    //    //            nearestEnemy = hitColliders[i].transform;
+    //    //        }
+    //    //    }
+
+    //    //    if (nearestEnemy != null)
+    //    //    {
+    //    //        //Debug.Log("Chay Detect");
+    //    //        //ChangeAnim("IsIdle");
+
+    //    //        //Vector3 direction = nearestEnemy.position - throwPoint.position;
+    //    //        //direction.Normalize();
+
+    //    //        //transform.rotation = Quaternion.LookRotation(direction);
+
+    //    //        //nearestEnemy.GetComponent<Bot>().targetCircle.SetActive(true);
+
+    //    //        Attack(nearestEnemy);
+
+    //    //    }
+    //    //}
+
+    //    if (numEnemies > 0)
+    //    {
+    //        Debug.Log("There are enemies around");
+    //        float closestDistance = 100f;
+    //        Transform nearestEnemy = null;
+
+    //        foreach (var hitCollider in hitColliders)
+    //        {
+    //            if (hitCollider != null)
+    //            {
+    //                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+
+    //                // Check if the enemy is within the player's attack range
+    //                if (distance < weaponData.autoAttackRange)
+    //                {
+    //                    hitCollider.GetComponent<Bot>().targetCircle.SetActive(true);
+    //                }
+    //                else
+    //                {
+    //                    hitCollider.GetComponent<Bot>().targetCircle.SetActive(false);
+    //                }
+
+    //                if (distance < closestDistance)
+    //                {
+    //                    closestDistance = distance;
+    //                    nearestEnemy = hitCollider.transform;
+    //                }
+    //            }
+    //        }
+
+    //        if (nearestEnemy != null && moveVector == Vector3.zero)
+    //        {
+    //            Debug.Log("Found a nearest enemy!");
+    //            // Attack the nearest enemy
+    //            Attack(nearestEnemy);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // Turn off target circles for all enemies when no enemies are in range
+    //        foreach (var hitCollider in hitColliders)
+    //        {
+    //            if (hitCollider != null)
+    //            {
+    //                Bot bot = hitCollider.GetComponent<Bot>();
+    //                if (bot != null)
+    //                {
+    //                    bot.targetCircle.SetActive(false);
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //}
+
     private void DetectEnemies()
     {
-        
-        // Check for enemies within the autoAttackRange
-        Collider[] hitColliders = new Collider[10];
-        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
-
         if (IsDead)
         {
+            Debug.Log("Dead cant detect");
             return;
         }
 
-        //if (numEnemies > 0)
-        //{
-        //    float closestDistance = 100f;
-        //    Transform nearestEnemy = null;
+        float closestDistance = weaponData.autoAttackRange + 1; // Initialize with a value greater than attack range
+        Transform nearestEnemy = null;
 
-
-        //    for (int i = 0; i < numEnemies; i++)
-        //    {
-        //        float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
-        //        hitColliders[i].GetComponent<Bot>().targetCircle.SetActive(true);
-
-        //        if (distance < closestDistance)
-        //        {
-        //            closestDistance = distance;
-        //            nearestEnemy = hitColliders[i].transform;
-        //        }
-        //    }
-
-        //    if (nearestEnemy != null)
-        //    {
-        //        //Debug.Log("Chay Detect");
-        //        //ChangeAnim("IsIdle");
-
-        //        //Vector3 direction = nearestEnemy.position - throwPoint.position;
-        //        //direction.Normalize();
-
-        //        //transform.rotation = Quaternion.LookRotation(direction);
-
-        //        //nearestEnemy.GetComponent<Bot>().targetCircle.SetActive(true);
-
-        //        Attack(nearestEnemy);
-
-        //    }
-        //}
-
-        if (numEnemies > 0)
+        foreach (Bot bot in LevelManager.Instance.bots)
         {
-            float closestDistance = 100f;
-            Transform nearestEnemy = null;
-
-            foreach (var hitCollider in hitColliders)
+            if (bot != null && !bot.IsDead)
             {
-                if (hitCollider != null)
+                float distance = Vector3.Distance(transform.position, bot.transform.position);
+
+               
+                if (distance < weaponData.autoAttackRange)
                 {
-                    float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
-
-                    // Check if the enemy is within the player's attack range
-                    if (distance < weaponData.autoAttackRange)
-                    {
-                        hitCollider.GetComponent<Bot>().targetCircle.SetActive(true);
-                    }
-                    else
-                    {
-                        hitCollider.GetComponent<Bot>().targetCircle.SetActive(false);
-                    }
-
-                    if (distance < closestDistance)
-                    {
-                        closestDistance = distance;
-                        nearestEnemy = hitCollider.transform;
-                    }
+                    bot.targetCircle.SetActive(true);
                 }
-            }
-
-            if (nearestEnemy != null)
-            {
-                // Attack the nearest enemy
-                Attack(nearestEnemy);
-            }
-        }
-        else
-        {
-            // Turn off target circles for all enemies when no enemies are in range
-            foreach (var hitCollider in hitColliders)
-            {
-                if (hitCollider != null)
+                else
                 {
-                    Bot bot = hitCollider.GetComponent<Bot>();
-                    if (bot != null)
-                    {
-                        bot.targetCircle.SetActive(false);
-                    }
+                    bot.targetCircle.SetActive(false);
+                }
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    nearestEnemy = bot.transform;
                 }
             }
         }
 
+        if (nearestEnemy != null && moveVector == Vector3.zero)
+        {
+            Debug.Log("Found a nearest enemy!");
+            Attack(nearestEnemy);
+        }
     }
 
     public void Attack(Transform target)
@@ -180,7 +225,7 @@ public class Player : Character
             Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
             //bullet.attacker = this;
             bullet.OnInit(this);
-            bullet.GetComponent<Rigidbody>().velocity = direction.normalized * 5f;
+            bullet.bulletRigidbody.velocity = direction.normalized * 5f;
 
             // Set the cooldown timer
             lastAutoAttackTime = Time.time;
@@ -191,8 +236,7 @@ public class Player : Character
     {
         if (attackRangeCircle != null)
         {
-            // Set the local scale of the attack range circle based on the player's attack range
-            float circleScale = weaponData.autoAttackRange - 1; // Multiplied by 2 to convert radius to diameter
+            float circleScale = weaponData.autoAttackRange -2;
             attackRangeCircle.transform.localScale = new Vector3(circleScale, circleScale, 1f);
         }
     }

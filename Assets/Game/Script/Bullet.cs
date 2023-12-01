@@ -4,37 +4,41 @@ using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private float despawnDelay = 2f;
+    [SerializeField] private float rotatespeed = 180f;
+    private Vector3 maximumScale = new Vector3(3, 3, 3);
+    private Transform bulletTransform;
     public Rigidbody rb;
     public Character attacker;
     public MeshCollider bulletCollider;
-    //[SerializeField] private Transform bullet;
-    [SerializeField] private float rotatespeed = 180f;
-    private Vector3 maximumScale = new Vector3(3, 3, 3);
+    public Rigidbody bulletRigidbody;
 
-    [SerializeField] private float despawnDelay = 2f; 
 
-    //private float currentCharScale;
+    private void Awake()
+    {
+        bulletTransform = this.GetComponent<Transform>();
+    }
 
     private void Start()
     {
         //rb = GetComponent<Rigidbody>(); Cache kieu 1
-
-        
+        //bulletTransform = this.GetComponent<Transform>();
+        //bulletTransform = this.GetComponent<Transform>();
     }
 
     private void OnEnable()
     {
         //ScaleForBullet();
         /*Invoke("OnDespawn", despawnDelay);*/ // phai lam onenable vi start chi 1 lan khi lan dau pool spawn, khi pool deactive va active lai ( respawn ) thi se k chay start vi da chay r
+        
     }
 
     private void Update()
     {
-        //transform.Rotate(Vector3.forward, rotatespeed * Time.deltaTime);
 
-        transform.Rotate(Vector3.up, rotatespeed * Time.deltaTime);
+        bulletTransform.Rotate(Vector3.up, rotatespeed * Time.deltaTime);
 
-        float distanceFromAttacker = Vector3.Distance(transform.position, attacker.transform.position);
+        float distanceFromAttacker = Vector3.Distance(bulletTransform.position, attacker.transform.position);
 
         if (distanceFromAttacker > attacker.weaponData.autoAttackRange)
         {
@@ -52,18 +56,33 @@ public class Bullet : MonoBehaviour
     {
         if (this != null)
         {
-            transform.localScale = Vector3.one; // Reset scale to (1, 1, 1)
+            bulletTransform.localScale = Vector3.one; // Reset scale to (1, 1, 1)
             LeanPool.Despawn(this);
         }
     }
 
     public void ScaleForBullet()
     {
-        //currentCharScale = attacker.charScale;
+        //bulletTransform.localScale *= attacker.charScale;
 
-        transform.localScale *= attacker.charScale;
+        //Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + bulletTransform.localScale);
 
-        Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + transform.localScale);
+        if (attacker != null)
+        {
+            if (bulletTransform != null)
+            {
+                bulletTransform.localScale *= attacker.charScale;
+                Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + bulletTransform.localScale);
+            }
+            else
+            {
+                Debug.LogError("bulletTransform is null in ScaleForBullet!");
+            }
+        }
+        else
+        {
+            Debug.LogError("Attacker is null in ScaleForBullet!");
+        }
     }
 
     private void OnTriggerEnter(Collider collision)

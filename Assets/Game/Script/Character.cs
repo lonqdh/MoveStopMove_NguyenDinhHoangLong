@@ -9,45 +9,38 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     //[SerializeField] public Weapon weapon;
-    [SerializeField] public Bullet bulletPrefab;
-    [SerializeField] public Transform throwPoint;
-    [SerializeField] public float moveSpeed;
-    [SerializeField] public float rotateSpeed;
-    [SerializeField] public LayerMask enemyLayer;
-    //[SerializeField] public float autoAttackRange = 5f;
-    public float lastAutoAttackTime;
-    [SerializeField] protected bool IsDead = false;
-    protected string currentAnimName;
-    [SerializeField] protected Animator anim;
-
-    //Scaling
-    [SerializeField] public float growthFactor = 1.2f;
-    [SerializeField] protected int killCountToGrow = 5;
-    protected int currentKillCount = 0;
-    private BoxCollider bulletCollider;
-    public float charScale = 1;
-
-    [SerializeField] internal WeaponData weaponData;
     [SerializeField] private Transform weaponHoldingPos;
+    [SerializeField] internal WeaponData weaponData;
+    [NonSerialized] protected float lastAutoAttackTime;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float rotateSpeed;
+    [SerializeField] protected Animator anim;
+    [SerializeField] protected int killCountToGrow = 5;
+    [SerializeField] public LayerMask enemyLayer;
+    [SerializeField] public float growthFactor = 1.2f;
+    
+    private BoxCollider bulletCollider;
     private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
+    protected string currentAnimName;
+    protected int defaultLayerNumber = 0;
+    protected int currentKillCount = 0;
+    public float charScale = 1;
+    public Bullet bulletPrefab;
+    public Transform throwPoint;
+    public bool IsDead = false;
+    
 
-
-
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         //OnInit();
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
         //if (!IsDead)
         //{
         //    Attack();
         //}
-
-        //OnDrawGizmosSelected();
     }
 
     internal virtual void OnInit()
@@ -68,8 +61,8 @@ public class Character : MonoBehaviour
 
     protected virtual void OnHit()
     {
-        //gameObject.layer = 0; // set thanh default layer de character k nham, ban toi nua
-        //OnDeath();
+        gameObject.layer = defaultLayerNumber; // set thanh default layer de character k nham, ban toi nua
+        OnDeath();
     }
 
     protected virtual void OnDeath()
