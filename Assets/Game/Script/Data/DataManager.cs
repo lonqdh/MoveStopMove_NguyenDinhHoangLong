@@ -20,4 +20,9 @@ public class DataManager : Singleton<DataManager>
 
         return null;
     }
+
+    public WeaponData GetWeaponData(int weaponIndex)
+    {
+        return weaponDataSO.weaponDataList[weaponIndex];
+    }
 }

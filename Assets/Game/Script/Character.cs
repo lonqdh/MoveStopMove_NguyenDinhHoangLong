@@ -47,7 +47,7 @@ public class Character : MonoBehaviour
     {
         if (weaponData != null)
         {
-            weaponData = DataManager.Instance.GetWeaponData(defaultCurrentWeapon);
+            weaponData = DataManager.Instance.GetWeaponData(GameManager.Instance.UserData.EquippedWeapon);
             Debug.Log("Char: " + this.name + " Weapon Type: " + weaponData.weaponType + ", Auto Attack Range: " + weaponData.autoAttackRange);
             Weapon weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
             weaponInstance.transform.parent = weaponHoldingPos;

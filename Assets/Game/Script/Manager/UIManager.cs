@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     public GameObject mainMenuUI;
     public GameObject gameplayUI;
@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         playBtn.onClick.AddListener(StartGame);
+        weaponBtn.onClick.AddListener(OpenWeaponShop);
     }
 
     public void StartGame()
@@ -24,6 +25,13 @@ public class UIManager : MonoBehaviour
         mainMenuUI.SetActive(false);
         gameplayUI.SetActive(true);
         LevelManager.Instance.OnStart();
+    }
+
+    public void OpenWeaponShop()
+    {
+        mainMenuUI.SetActive(false);
+        weaponShopUI.SetActive(true);
+
     }
 
 

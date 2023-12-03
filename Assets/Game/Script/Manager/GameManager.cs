@@ -12,6 +12,7 @@ public enum GameState
 public class GameManager : Singleton<GameManager>
 {
     private GameState state;
+    public UserData UserData;
 
     private void Awake()
     {
@@ -19,6 +20,17 @@ public class GameManager : Singleton<GameManager>
         //setup data
         ChangeState(GameState.MainMenu);
 
+        if(SaveManager.Instance.HasData<UserData>())
+        {
+            Debug.Log("Load Data");
+            UserData = SaveManager.Instance.LoadData<UserData>();
+        }
+        else
+        {
+            Debug.Log("Created Data");
+            UserData = new UserData();
+            SaveManager.Instance.SaveData(UserData);
+        }
     }
 
     public void ChangeState(GameState gameState)
@@ -30,4 +42,7 @@ public class GameManager : Singleton<GameManager>
     {
         return state == gameState;
     }
+
+
+
 }
