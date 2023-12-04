@@ -9,7 +9,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     //[SerializeField] public Weapon weapon;
-    [SerializeField] private Transform weaponHoldingPos;
+    [SerializeField] protected Transform weaponHoldingPos;
     [SerializeField] private Animator anim;
     [SerializeField] private int killCountToGrow = 5;
     [SerializeField] internal WeaponData weaponData;
@@ -20,7 +20,6 @@ public class Character : MonoBehaviour
     
     
     [SerializeField] private float growthFactor = 1.2f;
-    [SerializeField] 
     
     //private BoxCollider bulletCollider;
     //private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
@@ -32,8 +31,9 @@ public class Character : MonoBehaviour
     public Transform throwPoint;
     public bool IsDead = false;
     public LayerMask enemyLayer;
+    public Collider charCollider;
 
-    private Weapon weaponInstance;
+    protected Weapon weaponInstance;
     
 
     protected virtual void Start()
@@ -79,8 +79,8 @@ public class Character : MonoBehaviour
 
     protected virtual void OnHit()
     {
-        gameObject.layer = defaultLayerNumber; // set thanh default layer de character k nham, ban toi nua
-        OnDeath();
+        //gameObject.layer = defaultLayerNumber; // set thanh default layer de character k nham, ban toi nua
+        //OnDeath();
     }
 
     protected virtual void OnDeath()
@@ -162,6 +162,16 @@ public class Character : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, weaponData.autoAttackRange);
         }
     }
+
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.layer == 3)
+    //        Debug.Log("Self hit!");
+
+    //    // Ignore the collision with the player.
+    //    Physics.IgnoreCollision(collision.collider, collider);
+    //    Physics.IgnoreCollision()
+    //}
 
     //con loi khi bot spawn lai k ban
     //nguyen nhan : do ham resetsize reset attackrange thanh` 0 cho bot

@@ -9,6 +9,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject mainMenuUI;
     public GameObject gameplayUI;
     public GameObject weaponShopUI;
+    public GameObject mainCamera;
     public Button playBtn;
     public Button weaponBtn;
     public Button skinBtn;
@@ -32,6 +33,7 @@ public class UIManager : Singleton<UIManager>
 
     public void OpenWeaponShop()
     {
+        mainCamera.GetComponent<AudioListener>().enabled = false;
         mainMenuUI.SetActive(false);
         weaponShopUI.SetActive(true);
 

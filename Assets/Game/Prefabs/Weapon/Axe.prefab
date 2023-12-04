@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3679200490676622431}
-  - component: {fileID: 7686740861303012141}
   - component: {fileID: 4206937529199093107}
   m_Layer: 0
   m_Name: Axe
@@ -34,27 +33,6 @@ Transform:
   - {fileID: 3530459889586279998}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 180}
---- !u!65 &7686740861303012141
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491770660477046496}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.42162132, y: 1.0212421, z: 0.18969917}
-  m_Center: {x: -0.089221, y: 0.010621071, z: 0.00993824}
 --- !u!114 &4206937529199093107
 MonoBehaviour:
   m_ObjectHideFlags: 0

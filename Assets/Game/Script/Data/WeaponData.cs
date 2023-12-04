@@ -5,10 +5,10 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    Axe = 0,
+    Hammer = 0,
     Boomerang = 1,
-    Knife = 2,
-    Hammer = 3,
+    Axe = 2,
+    Knife = 3,
     Arrow = 4,
 }
 
@@ -21,17 +21,4 @@ public class WeaponData
     public float autoAttackRange;
     public float attackSpeed;
     public int price;
-
-
-    //// Clone the WeaponData
-    //public WeaponData Clone()
-    //{
-    //    return new WeaponData
-    //    {
-    //        weaponType = this.weaponType,
-    //        weapon = this.weapon,
-    //        bullet = this.bullet,
-    //        autoAttackRange = this.autoAttackRange
-    //    };
-    //}
 }

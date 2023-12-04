@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Bot : Character
 {
     private IState<Bot> currentState;
-    private int botLayerNumber = 7;
+    private int botLayerNumber = 3;
     //private Bullet bullet;
     
     public NavMeshAgent agent;
@@ -49,10 +49,34 @@ public class Bot : Character
         }
     }
 
+    
+    private void GetRandomWeapon()
+    {
+        //int randWeapIndex = Random.Range(0, weaponDataSO.weaponDataList.Count);
+        Debug.Log(DataManager.Instance.weaponDataSO.weaponDataList.Count);
+        int randWeapIndex = Random.Range(0, DataManager.Instance.weaponDataSO.weaponDataList.Capacity);
+        weaponData = DataManager.Instance.weaponDataSO.weaponDataList[randWeapIndex];
+
+        if (weaponInstance == null)
+        {
+            weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
+            attackRange = weaponData.autoAttackRange;
+        }
+        else
+        {
+            Destroy(weaponInstance.gameObject);
+            weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
+            attackRange = weaponData.autoAttackRange;
+        }
+
+        weaponInstance.transform.parent = weaponHoldingPos;
+    }
+
     private void DetectEnemies()
     {
         // Check for enemies within the autoAttackRange
         Collider[] hitColliders = new Collider[10];
+
         int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyLayer);
 
         if (IsDead)
@@ -67,6 +91,10 @@ public class Bot : Character
 
             for (int i = 0; i < numEnemies; i++)
             {
+                if(charCollider == hitColliders[i])
+                {
+                    continue;
+                }
                 float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
 
                 if (distance < closestDistance)
@@ -133,15 +161,26 @@ public class Bot : Character
 
     internal override void OnInit()
     {
-        base.OnInit();
+        //base.OnInit();
         isAttacking = false;
         IsDead = false;
         this.gameObject.layer = botLayerNumber;
+        
+        if (weaponData != null)
+        {
+            GetRandomWeapon();
+        }
+        if (weaponData.bullet != null)
+        {
+            bulletPrefab = weaponData.bullet;
+        }
+
         ChangeState(new PatrolState());
 
-    }
+        
+}
 
-    private void OnDespawn()
+private void OnDespawn()
     {
         LevelManager.Instance.DespawnBot(this);
         Transform spawnPoint = GetRandomSpawnPoint();

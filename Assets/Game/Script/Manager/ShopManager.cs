@@ -1,3 +1,4 @@
+using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,6 +16,8 @@ public class ShopManager : Singleton<ShopManager>
     public Button PrevWeapInShopBtn;
     public Button CloseWeaponShopBtn;
     public Button BuyWeaponBtn;
+    [SerializeField] private Transform weaponShopPosition;
+    private Weapon weaponModel;
     private UserData data;
     private int currentWeapShownIndex = 0;
 
@@ -25,27 +28,42 @@ public class ShopManager : Singleton<ShopManager>
         PrevWeapInShopBtn.onClick.AddListener(PrevWeaponInShop);
         CloseWeaponShopBtn.onClick.AddListener(CloseShop);
         BuyWeaponBtn.onClick.AddListener(BuyWeapon);
-        weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-        weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+        showWeapon(currentWeapShownIndex);
         currentCoinLeft.SetText(data.CurrentCoins.ToString());
     }
 
     private void Update()
     {
-        //if(currentWeapShownIndex > 2)
-        // {
-        //     currentWeapShownIndex = 0;
-        //     weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-        //     weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
-
-        // }
-
         SetWeaponsAvailability(currentWeapShownIndex);
+    }
+
+    private void showWeapon(int weaponIndex)
+    {
+        if(weaponModel == null)
+        {
+            //weaponModel = LeanPool.Spawn(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            weaponModel.transform.parent = weaponShopPosition;
+            weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
+            weaponPrice.SetText(WeaponDataSO.weaponDataList[weaponIndex].price.ToString());
+        }
+        else
+        {
+            //LeanPool.Despawn(weaponModel);
+            //weaponModel = LeanPool.Spawn(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            Destroy(weaponModel.gameObject);
+            weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            //weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            weaponModel.transform.parent = weaponShopPosition;
+            weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
+            weaponPrice.SetText(WeaponDataSO.weaponDataList[weaponIndex].price.ToString());
+        }
+        
     }
 
     private void SetWeaponsAvailability(int currentWeapIndex)
     {
-        if(data.BoughtWeapons.Contains(currentWeapIndex))
+        if (data.BoughtWeapons.Contains(currentWeapIndex))
         {
             weaponAvailability.SetText("Owned");
             weaponPrice.SetText("Equip");
@@ -54,13 +72,6 @@ public class ShopManager : Singleton<ShopManager>
         {
             weaponAvailability.SetText("Locked");
         }
-        //else if(data.BoughtWeapons.Contains(currentWeapIndex) && data.EquippedWeapon == currentWeapShownIndex)
-        //{
-        //    weaponAvailability.SetText("Owned");
-        //    weaponPrice.SetText("Equipped");
-        //}
-        
-
     }
 
     public void BuyWeapon()
@@ -74,7 +85,7 @@ public class ShopManager : Singleton<ShopManager>
             SaveManager.Instance.SaveData(data);
             currentCoinLeft.SetText(data.CurrentCoins.ToString());
         }
-        if(weaponPrice.text == "Equip")
+        if (weaponPrice.text == "Equip")
         {
             data.EquippedWeapon = currentWeapShownIndex;
             SaveManager.Instance.SaveData(data);
@@ -85,6 +96,8 @@ public class ShopManager : Singleton<ShopManager>
     public void CloseShop()
     {
         UIManager.Instance.weaponShopUI.SetActive(false);
+        //UIManager.Instance.mainCamera.SetActive(true);
+        UIManager.Instance.mainCamera.GetComponent<AudioListener>().enabled = true;
         UIManager.Instance.mainMenuUI.SetActive(true);
     }
 
@@ -94,15 +107,16 @@ public class ShopManager : Singleton<ShopManager>
         {
             currentWeapShownIndex = 0;
 
-            weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+            //weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
+            //weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+
+            showWeapon(currentWeapShownIndex);
 
         }
         else
         {
             currentWeapShownIndex++;
-            weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+            showWeapon(currentWeapShownIndex);
         }
 
     }
@@ -112,14 +126,12 @@ public class ShopManager : Singleton<ShopManager>
         if (currentWeapShownIndex == 0)
         {
             currentWeapShownIndex = 2;
-            weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+            showWeapon(currentWeapShownIndex);
         }
         else
         {
             currentWeapShownIndex--;
-            weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
+            showWeapon(currentWeapShownIndex);
         }
     }
 
