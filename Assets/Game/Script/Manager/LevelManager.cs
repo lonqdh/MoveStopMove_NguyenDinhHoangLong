@@ -21,7 +21,7 @@ public class LevelManager : Singleton<LevelManager>
     // Start is called before the first frame update
     void Start()
     {
-        //LoadLevel();
+        LoadLevel();
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class LevelManager : Singleton<LevelManager>
     public void OnStart()
     {
         GameManager.Instance.ChangeState(GameState.Gameplay);
-        LoadLevel();
+        //LoadLevel();
     }
 
     public void SpawnBotsAtStart()

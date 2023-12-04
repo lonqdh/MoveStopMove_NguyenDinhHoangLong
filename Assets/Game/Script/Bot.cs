@@ -31,7 +31,7 @@ public class Bot : Character
     protected override void Update()
     {
 
-        if (!IsDead)
+        if (!IsDead && GameManager.Instance.IsState(GameState.Gameplay))
         {
             //base.Update();
             if (currentState != null)
@@ -53,7 +53,7 @@ public class Bot : Character
     {
         // Check for enemies within the autoAttackRange
         Collider[] hitColliders = new Collider[10];
-        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
+        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyLayer);
 
         if (IsDead)
         {
@@ -62,7 +62,7 @@ public class Bot : Character
 
         if (numEnemies > 0 && !isAttacking)
         {
-            float closestDistance = float.MaxValue;
+            float closestDistance = attackRange + 1;
             Transform nearestEnemy = null;
 
             for (int i = 0; i < numEnemies; i++)

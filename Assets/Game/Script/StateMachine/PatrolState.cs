@@ -4,6 +4,7 @@ public class PatrolState : IState<Bot>
 {
     private float patrolDuration = 3f; // Time to patrol in seconds
     private float patrolTimer;
+    private bool ingame = GameManager.Instance.IsState(GameState.Gameplay);
 
     public void OnEnter(Bot bot)
     {
@@ -12,7 +13,11 @@ public class PatrolState : IState<Bot>
         patrolTimer = 0f;
         
         // Start patrolling
-        Patrol(bot);
+        if(ingame)
+        {
+            Patrol(bot);
+        }
+        
     }
 
     public void OnExecute(Bot bot)

@@ -6,20 +6,20 @@ public class DataManager : Singleton<DataManager>
 {
     public WeaponDataSO weaponDataSO;
 
-    public WeaponData GetWeaponData(WeaponType weaponType)
-    {
-        List<WeaponData> weaponData = weaponDataSO.weaponDataList;
-        for (int i = 0; i < weaponData.Count; i++)
-        {
-            if(weaponType == weaponData[i].weaponType)
-            {
-                //return weaponData[i];
-                return weaponData[i].Clone();
-            }
-        }
+    //public WeaponData GetWeaponData(WeaponType weaponType)
+    //{
+    //    List<WeaponData> weaponData = weaponDataSO.weaponDataList;
+    //    for (int i = 0; i < weaponData.Count; i++)
+    //    {
+    //        if(weaponType == weaponData[i].weaponType)
+    //        {
+    //            //return weaponData[i];
+    //            return weaponData[i].Clone();
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
     public WeaponData GetWeaponData(int weaponIndex)
     {

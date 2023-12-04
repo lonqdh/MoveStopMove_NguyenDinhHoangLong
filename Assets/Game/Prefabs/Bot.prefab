@@ -240,25 +240,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a087a41f2121b0469c91437f42d7f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
-  throwPoint: {fileID: 2353246817582222908}
-  moveSpeed: 3
-  rotateSpeed: 5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  lastAutoAttackTime: 0
-  IsDead: 0
+  weaponHoldingPos: {fileID: 1301214746916530160}
   anim: {fileID: 6347822531726337061}
-  growthFactor: 1.2
   killCountToGrow: 5
-  charScale: 1
   weaponData:
     weaponType: 0
     weapon: {fileID: 0}
     bullet: {fileID: 0}
     autoAttackRange: 0
-  weaponHoldingPos: {fileID: 1301214746916530160}
+  attackRange: 0
+  moveSpeed: 3
+  rotateSpeed: 5
+  growthFactor: 1.2
+  bulletCollider: {fileID: 0}
+  charScale: 1
+  bulletPrefab: {fileID: 0}
+  throwPoint: {fileID: 2353246817582222908}
+  IsDead: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   agent: {fileID: 4475528695441656418}
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointSet: 0

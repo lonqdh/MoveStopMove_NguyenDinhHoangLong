@@ -179,7 +179,7 @@ public class Player : Character
             return;
         }
 
-        float closestDistance = weaponData.autoAttackRange + 1; // Initialize with a value greater than attack range
+        float closestDistance = attackRange + 1; // Initialize with a value greater than attack range
         Transform nearestEnemy = null;
 
         foreach (Bot bot in LevelManager.Instance.bots)
@@ -189,7 +189,7 @@ public class Player : Character
                 float distance = Vector3.Distance(transform.position, bot.transform.position);
 
                
-                if (distance < weaponData.autoAttackRange)
+                if (distance < attackRange)
                 {
                     bot.targetCircle.SetActive(true);
                 }
@@ -240,7 +240,7 @@ public class Player : Character
     {
         if (attackRangeCircle != null)
         {
-            float circleScale = weaponData.autoAttackRange -2;
+            float circleScale = attackRange -2;
             attackRangeCircle.transform.localScale = new Vector3(circleScale, circleScale, 1f);
         }
     }

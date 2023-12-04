@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     public Button playBtn;
     public Button weaponBtn;
     public Button skinBtn;
+    public TextMeshProUGUI coinText;
 
 
 
@@ -18,6 +20,7 @@ public class UIManager : Singleton<UIManager>
     {
         playBtn.onClick.AddListener(StartGame);
         weaponBtn.onClick.AddListener(OpenWeaponShop);
+        coinText.text = GameManager.Instance.UserData.CurrentCoins.ToString();
     }
 
     public void StartGame()

@@ -10,24 +10,30 @@ public class Character : MonoBehaviour
 {
     //[SerializeField] public Weapon weapon;
     [SerializeField] private Transform weaponHoldingPos;
+    [SerializeField] private Animator anim;
+    [SerializeField] private int killCountToGrow = 5;
     [SerializeField] internal WeaponData weaponData;
     [NonSerialized] protected float lastAutoAttackTime;
+    [SerializeField] protected float attackRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotateSpeed;
-    [SerializeField] protected Animator anim;
-    [SerializeField] protected int killCountToGrow = 5;
-    [SerializeField] public LayerMask enemyLayer;
-    [SerializeField] public float growthFactor = 1.2f;
     
-    private BoxCollider bulletCollider;
-    private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
-    protected string currentAnimName;
+    
+    [SerializeField] private float growthFactor = 1.2f;
+    [SerializeField] 
+    
+    //private BoxCollider bulletCollider;
+    //private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
+    protected string currentAnimName = "";
     protected int defaultLayerNumber = 0;
     protected int currentKillCount = 0;
     public float charScale = 1;
     public Bullet bulletPrefab;
     public Transform throwPoint;
     public bool IsDead = false;
+    public LayerMask enemyLayer;
+
+    private Weapon weaponInstance;
     
 
     protected virtual void Start()
@@ -47,10 +53,7 @@ public class Character : MonoBehaviour
     {
         if (weaponData != null)
         {
-            weaponData = DataManager.Instance.GetWeaponData(GameManager.Instance.UserData.EquippedWeapon);
-            Debug.Log("Char: " + this.name + " Weapon Type: " + weaponData.weaponType + ", Auto Attack Range: " + weaponData.autoAttackRange);
-            Weapon weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
-            weaponInstance.transform.parent = weaponHoldingPos;
+            ChangeWeapon();
         }
         if (weaponData.bullet != null)
         {
@@ -58,6 +61,21 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void ChangeWeapon()
+    {
+        weaponData = DataManager.Instance.GetWeaponData(GameManager.Instance.UserData.EquippedWeapon);
+        attackRange = weaponData.autoAttackRange;
+        if (weaponInstance == null)
+        {
+            weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
+        }
+        else
+        {
+            Destroy(weaponInstance.gameObject);
+            weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
+        }
+        weaponInstance.transform.parent = weaponHoldingPos;
+    }
 
     protected virtual void OnHit()
     {
@@ -109,7 +127,8 @@ public class Character : MonoBehaviour
         {
             transform.localScale *= growthFactor;
 
-            weaponData.autoAttackRange *= growthFactor;
+            //weaponData.autoAttackRange *= growthFactor;
+            attackRange *= growthFactor;
 
             ScaleAllChildren(transform, growthFactor);
 
