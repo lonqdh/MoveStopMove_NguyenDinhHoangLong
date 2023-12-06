@@ -123,27 +123,10 @@ public class Bot : Character
         }
     }
 
-    public void Attack(Transform target)
+    protected override void Attack(Transform target)
     {
-        float cooldownDuration = 2f;
-
-        // Check if enough time has passed since the last attack
-        if (Time.time - lastAutoAttackTime >= cooldownDuration)
-        {
-            ChangeAnim("IsAttack");
-
-            Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
-            //bullet.attacker = this;
-            bullet.OnInit(this);
-            bullet.bulletRigidbody.velocity = (target.position - throwPoint.position).normalized * 5f;
-
-            // Set the cooldown timer
-            lastAutoAttackTime = Time.time;
-
-            isAttacking = true;
-
-            StartCoroutine(ResumePatrolling());
-        }
+        base.Attack(target);
+        StartCoroutine(ResumePatrolling());
     }
 
     private IEnumerator ResumePatrolling()
@@ -182,16 +165,22 @@ public class Bot : Character
 
 private void OnDespawn()
     {
-        LevelManager.Instance.DespawnBot(this);
-        Transform spawnPoint = GetRandomSpawnPoint();
+        //LevelManager.Instance.DespawnBot(this);
+        //Transform spawnPoint = GetRandomSpawnPoint();
 
-        if (spawnPoint != null)
+        //if (spawnPoint != null)
+        //{
+        //    LevelManager.Instance.SpawnSingleBot(spawnPoint);
+        //}
+        //else
+        //{
+        //    Debug.LogError("No valid spawn points available.");
+        //}
+
+        LevelManager.Instance.DespawnBot(this);
+        if(LevelManager.Instance.totalPlayers > 25)
         {
-            LevelManager.Instance.SpawnSingleBot(spawnPoint);
-        }
-        else
-        {
-            Debug.LogError("No valid spawn points available.");
+            LevelManager.Instance.SpawnSingleBot();
         }
     }
 
@@ -204,32 +193,22 @@ private void OnDespawn()
         ChangeAnim("IsDead");
         Invoke(nameof(OnDespawn), 2f);
 
-        //Transform spawnPoint = GetRandomSpawnPoint();
-
-        //if (spawnPoint != null)
-        //{
-        //    LevelManager.Instance.SpawnSingleBot(spawnPoint);
-        //}
-        //else
-        //{
-        //    Debug.LogError("No valid spawn points available.");
-        //}
     }
 
-    private Transform GetRandomSpawnPoint()
-    {
-        List<Transform> spawnPoints = LevelManager.Instance.botSpawnPointList;
+    //private Transform GetRandomSpawnPoint()
+    //{
+    //    List<Transform> spawnPoints = LevelManager.Instance.botSpawnPointList;
 
-        if (spawnPoints.Count > 0)
-        {
-            int randomIndex = Random.Range(0, spawnPoints.Count);
-            return spawnPoints[randomIndex];
-        }
-        else
-        {
-            return null;
-        }
-    }
+    //    if (spawnPoints.Count > 0)
+    //    {
+    //        int randomIndex = Random.Range(0, spawnPoints.Count);
+    //        return spawnPoints[randomIndex];
+    //    }
+    //    else
+    //    {
+    //        return null;
+    //    }
+    //}
 
     public void ChangeState(IState<Bot> state)
     {

@@ -72,125 +72,55 @@ public class Player : Character
         }
     }
 
-    //private void DetectEnemies()
-    //{
-
-    //    // Check for enemies within the autoAttackRange
-    //    Collider[] hitColliders = new Collider[10];
-    //    int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, weaponData.autoAttackRange, hitColliders, enemyLayer);
-
-    //    if (this.IsDead)
-    //    {
-    //        Debug.Log("Dead cant detect");
-    //        return;
-    //    }
-
-    //    if (numEnemies > 0)
-    //    {
-    //        float closestDistance = 100f;
-
-    //        for (int i = 0; i < numEnemies; i++)
-    //        {
-    //            if (charCollider != hitColliders[i])
-    //            {
-    //                float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
-    //                //hitColliders[i].GetComponent<Bot>().targetCircle.SetActive(true);
-
-    //                if (distance < closestDistance)
-    //                {
-    //                    closestDistance = distance;
-    //                    nearestEnemy = hitColliders[i].transform;
-    //                }
-    //                else
-    //                {
-    //                    nearestEnemy = null;
-    //                }
-    //            }
-    //        }
-
-    //        if (nearestEnemy != null)
-    //        {
-    //            //Debug.Log("Chay Detect");
-    //            //ChangeAnim("IsIdle");
-
-    //            //Vector3 direction = nearestEnemy.position - throwPoint.position;
-    //            //direction.Normalize();
-
-    //            //transform.rotation = Quaternion.LookRotation(direction);
-
-    //            //nearestEnemy.GetComponent<Bot>().targetCircle.SetActive(true);
-
-    //            Attack(nearestEnemy);
-    //        }
-    //    }
-    //}
-
-
     private void DetectEnemies()
     {
+        // Check for enemies within the autoAttackRange
+        Collider[] hitColliders = new Collider[10];
+
+        int numEnemies = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyLayer);
+
         if (IsDead)
         {
-            Debug.Log("Dead cant detect");
             return;
         }
 
-        float closestDistance = attackRange + 1; // Initialize with a value greater than attack range
-        Transform nearestEnemy = null;
-
-        foreach (Bot bot in LevelManager.Instance.bots)
+        if (numEnemies > 0)
         {
-            if (bot != null && !bot.IsDead)
-            {
-                float distance = Vector3.Distance(transform.position, bot.transform.position);
+            float closestDistance = attackRange + 1;
+            Transform nearestEnemy = null;
 
+            for (int i = 0; i < numEnemies; i++)
+            {
+                if (charCollider == hitColliders[i])
+                {
+                    continue;
+                }
+                float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
+                Debug.Log("Detected enemy: " + hitColliders[i].gameObject.name);
 
                 if (distance < attackRange)
                 {
-                    bot.targetCircle.SetActive(true);
+                    hitColliders[i].GetComponent<Bot>().targetCircle.SetActive(true);
                 }
                 else
                 {
-                    bot.targetCircle.SetActive(false);
+                    hitColliders[i].GetComponent<Bot>().targetCircle.SetActive(false);
                 }
 
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
-                    nearestEnemy = bot.transform;
+                    nearestEnemy = hitColliders[i].transform;
                 }
             }
-        }
 
-        if (nearestEnemy != null && moveVector == Vector3.zero)
-        {
-            Debug.Log("Found a nearest enemy!");
-            Attack(nearestEnemy);
-        }
-    }
+            if (nearestEnemy != null && moveVector == Vector3.zero)
+            {
+                Attack(nearestEnemy);
 
-    public void Attack(Transform target)
-    {
-        float cooldownDuration = 2f;
-
-        // Check if enough time has passed since the last attack
-        if (Time.time - lastAutoAttackTime >= cooldownDuration)
-        {
-            Vector3 direction = target.position - throwPoint.position;
-
-            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-
-            ChangeAnim("IsAttack");
-
-            Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
-            //bullet.attacker = this;
-            bullet.OnInit(this);
-            bullet.bulletRigidbody.velocity = direction.normalized * 5f;
-
-            // Set the cooldown timer
-            lastAutoAttackTime = Time.time;
+            }
         }
     }
-
     private void ScaleAttackRangeCircle()
     {
         if (attackRangeCircle != null)
@@ -200,4 +130,6 @@ public class Player : Character
         }
     }
 
+    //da fix loi k detect duoc enemy. SOLUTION: bat freeze constraint Y cho bot
+    //nguyen nhan : ?
 }

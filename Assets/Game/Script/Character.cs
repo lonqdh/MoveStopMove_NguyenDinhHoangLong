@@ -32,7 +32,6 @@ public class Character : MonoBehaviour
     public bool IsDead = false;
     public LayerMask enemyLayer;
     public Collider charCollider;
-
     protected Weapon weaponInstance;
     
 
@@ -119,6 +118,29 @@ public class Character : MonoBehaviour
         }
     }
 
+    protected virtual void Attack(Transform target)
+    {
+        float cooldownDuration = 2f;
+
+        // Check if enough time has passed since the last attack
+        if (Time.time - lastAutoAttackTime >= cooldownDuration)
+        {
+            Vector3 direction = target.position - throwPoint.position;
+
+            transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+
+            ChangeAnim("IsAttack");
+
+            Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
+            //bullet.attacker = this;
+            bullet.OnInit(this);
+            bullet.bulletRigidbody.velocity = direction.normalized * 5f;
+
+            // Set the cooldown timer
+            lastAutoAttackTime = Time.time;
+        }
+    }
+
     public virtual void Grow()
     {
         currentKillCount++;
@@ -163,22 +185,12 @@ public class Character : MonoBehaviour
         }
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == 3)
-    //        Debug.Log("Self hit!");
 
-    //    // Ignore the collision with the player.
-    //    Physics.IgnoreCollision(collision.collider, collider);
-    //    Physics.IgnoreCollision()
-    //}
-
-    //con loi khi bot spawn lai k ban
-    //nguyen nhan : do ham resetsize reset attackrange thanh` 0 cho bot
 
     //sua collider cua bullet hammer ban ra * 1.5 voi moi lan grow
 
     //task : set attack range cho char dua tren weapondata, kphai thay doi attackrange cua weapondata --> kphai clone new weapondata cho moi char
+    //done
 
 }
 

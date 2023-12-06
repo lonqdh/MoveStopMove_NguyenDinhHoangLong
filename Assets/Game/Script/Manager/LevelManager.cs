@@ -12,9 +12,13 @@ public class LevelManager : Singleton<LevelManager>
     [NonSerialized] public List<Bot> bots = new List<Bot>();
 
     [SerializeField] public Transform planeTransform;
-    [SerializeField] public List<Transform> botSpawnPointList;
+    //[SerializeField] public List<Transform> botSpawnPointList;
     [SerializeField] private Transform playerSpawnPoint;
+    [SerializeField] private Transform ground;
+
+    public int totalPlayers = 50;
     public FloatingJoystick joystick;
+    private Vector3 randomBotSpawnPos;
     
 
 
@@ -49,30 +53,52 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SpawnBotsAtStart()
     {
-        foreach (Transform spawnPoint in botSpawnPointList)
+        //foreach (Transform spawnPoint in botSpawnPointList)
+        //{
+        //    Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
+        //    //newBot.gameObject.layer = 7;
+        //    newBot.OnInit();
+        //    bots.Add(newBot);
+
+        //}
+
+
+        for(int i = 0; i < 25; i++)
         {
-            Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
-            //newBot.gameObject.layer = 7;
+            randomBotSpawnPos = new Vector3(UnityEngine.Random.Range(-200, 200), 1, UnityEngine.Random.Range(-200, 200));
+            Bot newBot = LeanPool.Spawn(botPrefab, randomBotSpawnPos, Quaternion.identity);
             newBot.OnInit();
             bots.Add(newBot);
-
         }
     }
 
-    public void SpawnSingleBot(Transform spawnPoint)
+    //public void SpawnSingleBot(Transform spawnPoint)
+    //{
+    //    Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
+    //    newBot.OnInit();
+    //    bots.Add(newBot);
+    //}
+
+    public void SpawnSingleBot()
     {
-        Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
+        randomBotSpawnPos = new Vector3(UnityEngine.Random.Range(-200, 200), 1, UnityEngine.Random.Range(-200, 200));
+        Bot newBot = LeanPool.Spawn(botPrefab, randomBotSpawnPos, Quaternion.identity);
         newBot.OnInit();
         bots.Add(newBot);
     }
 
     public void DespawnBot(Bot bot)
     {
-        if (bot != null && bots.Contains(bot))
+        if (bot != null && bots.Contains(bot) && totalPlayers > 0)
         {
             bots.Remove(bot);
             LeanPool.Despawn(bot);
-            
+            totalPlayers--;
+            UIManager.Instance.SetTotalPlayersText();
+        }
+        else if(totalPlayers == 0)
+        {
+            Debug.Log("Finished Game!");
         }
         else
         {
@@ -80,6 +106,6 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-
+    //lam cai spawn bot kphai dua tren diem co san nua, tu random tren plane
 
 }

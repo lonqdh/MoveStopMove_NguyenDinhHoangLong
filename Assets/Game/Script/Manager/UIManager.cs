@@ -14,11 +14,14 @@ public class UIManager : Singleton<UIManager>
     public Button weaponBtn;
     public Button skinBtn;
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI playersLeft;
+    //private int numOfPlayersLeft;
 
 
 
     private void Start()
     {
+        //numOfPlayersLeft = LevelManager.Instance.totalPlayers;
         playBtn.onClick.AddListener(StartGame);
         weaponBtn.onClick.AddListener(OpenWeaponShop);
         coinText.text = GameManager.Instance.UserData.CurrentCoins.ToString();
@@ -29,6 +32,7 @@ public class UIManager : Singleton<UIManager>
         mainMenuUI.SetActive(false);
         gameplayUI.SetActive(true);
         LevelManager.Instance.OnStart();
+        SetTotalPlayersText();
     }
 
     public void OpenWeaponShop()
@@ -36,7 +40,11 @@ public class UIManager : Singleton<UIManager>
         mainCamera.GetComponent<AudioListener>().enabled = false;
         mainMenuUI.SetActive(false);
         weaponShopUI.SetActive(true);
+    }
 
+    public void SetTotalPlayersText()
+    {
+        playersLeft.SetText(LevelManager.Instance.totalPlayers.ToString());
     }
 
 
@@ -46,7 +54,6 @@ public class UIManager : Singleton<UIManager>
         off.interactable = off;
         on.gameObject.SetActive(true);
         on.gameObject.SetActive(false);
-
     }
 
 
