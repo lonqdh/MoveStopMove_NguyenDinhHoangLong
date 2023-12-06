@@ -41,7 +41,6 @@ public class ShopManager : Singleton<ShopManager>
     {
         if(weaponModel == null)
         {
-            //weaponModel = LeanPool.Spawn(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             weaponModel.transform.parent = weaponShopPosition;
             weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
@@ -49,11 +48,8 @@ public class ShopManager : Singleton<ShopManager>
         }
         else
         {
-            //LeanPool.Despawn(weaponModel);
-            //weaponModel = LeanPool.Spawn(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             Destroy(weaponModel.gameObject);
             weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
-            //weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             weaponModel.transform.parent = weaponShopPosition;
             weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
             weaponPrice.SetText(WeaponDataSO.weaponDataList[weaponIndex].price.ToString());

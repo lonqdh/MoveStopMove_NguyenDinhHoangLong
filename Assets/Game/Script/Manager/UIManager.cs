@@ -8,6 +8,7 @@ public class UIManager : Singleton<UIManager>
 {
     public GameObject mainMenuUI;
     public GameObject gameplayUI;
+    public GameObject skinShopUI;
     public GameObject weaponShopUI;
     public GameObject mainCamera;
     public Button playBtn;
@@ -24,6 +25,7 @@ public class UIManager : Singleton<UIManager>
         //numOfPlayersLeft = LevelManager.Instance.totalPlayers;
         playBtn.onClick.AddListener(StartGame);
         weaponBtn.onClick.AddListener(OpenWeaponShop);
+        skinBtn.onClick.AddListener(OpenSkinShop);
         coinText.text = GameManager.Instance.UserData.CurrentCoins.ToString();
     }
 
@@ -33,6 +35,13 @@ public class UIManager : Singleton<UIManager>
         gameplayUI.SetActive(true);
         LevelManager.Instance.OnStart();
         SetTotalPlayersText();
+    }
+
+    public void OpenSkinShop()
+    {
+        mainCamera.GetComponent<AudioListener>().enabled = false;
+        mainMenuUI.SetActive(false);
+        skinShopUI.SetActive(true);
     }
 
     public void OpenWeaponShop()

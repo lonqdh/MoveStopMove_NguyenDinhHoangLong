@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
 {
     //[SerializeField] public Weapon weapon;
     [SerializeField] protected Transform weaponHoldingPos;
+    
     [SerializeField] private Animator anim;
     [SerializeField] private int killCountToGrow = 5;
     [SerializeField] internal WeaponData weaponData;
@@ -26,6 +27,7 @@ public class Character : MonoBehaviour
     protected string currentAnimName = "";
     protected int defaultLayerNumber = 0;
     protected int currentKillCount = 0;
+    public Transform hatPos;
     public float charScale = 1;
     public Bullet bulletPrefab;
     public Transform throwPoint;

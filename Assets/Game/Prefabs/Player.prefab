@@ -279,6 +279,7 @@ MonoBehaviour:
   moveSpeed: 5
   rotateSpeed: 5
   growthFactor: 1.2
+  hatPos: {fileID: 2505979607498479866}
   charScale: 1
   bulletPrefab: {fileID: 0}
   throwPoint: {fileID: 2353246817582222908}
@@ -290,6 +291,37 @@ MonoBehaviour:
   joystick: {fileID: 0}
   rigidbody: {fileID: 8559884618313162121}
   attackRangeCircle: {fileID: 2674662018765463896}
+--- !u!1 &8717133219995697074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2505979607498479866}
+  m_Layer: 3
+  m_Name: HatPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2505979607498479866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8717133219995697074}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.2629995, z: 0.16800022}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3935580051098061151}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8351725376154231365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -617,6 +649,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 2505979607498479866}
     - targetCorrespondingSourceObject: {fileID: -3220319501169496967, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1301214746916530160}
