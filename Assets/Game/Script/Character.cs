@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
     public LayerMask enemyLayer;
     public Collider charCollider;
     protected Weapon weaponInstance;
-    [SerializeField] protected GameObject hatInstance;
+    [SerializeField] public GameObject hatInstance;
 
 
 
@@ -91,7 +91,7 @@ public class Character : MonoBehaviour
     {
         hatData = DataManager.Instance.GetHatData((HatType)GameManager.Instance.UserData.EquippedHat);
         //Debug.Log(hatData.hatType.ToString());
-        Debug.Log("Anh Quoc Viet Dep Trai Cute De Thuong <3 <3 <3");
+        //Debug.Log("Anh Quoc Viet Dep Trai Cute De Thuong <3 <3 <3");
         //attackRange += hatData.range;
         if (hatInstance == null)
         {

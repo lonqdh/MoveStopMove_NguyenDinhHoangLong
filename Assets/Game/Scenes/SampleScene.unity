@@ -5073,10 +5073,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6b2c08bd98523488d69bf8d187d3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hatData: {fileID: 11400000, guid: e77f42f8ea9d03047b92be2187fd1b81, type: 2}
+  hatDataSO: {fileID: 11400000, guid: e77f42f8ea9d03047b92be2187fd1b81, type: 2}
   skinBtnPrefab: {fileID: 8241722146244364967, guid: f20359c34ac634242990e3776b8128d6, type: 3}
   skinItemParent: {fileID: 1086514064}
   hatList: []
+  skinButtonList: []
+  currentHatType: 0
 --- !u!114 &1086514066
 MonoBehaviour:
   m_ObjectHideFlags: 0

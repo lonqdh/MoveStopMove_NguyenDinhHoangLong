@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class SkinShopContent : Singleton<SkinShopContent>
 {
-    [SerializeField] private HatDataSO hatData;
+    [SerializeField] public HatDataSO hatDataSO;
     [SerializeField] private SkinButton skinBtnPrefab;
     [SerializeField] private Transform skinItemParent;
     public List<GameObject> hatList = new List<GameObject>();
+    public List<SkinButton> skinButtonList = new List<SkinButton>();
+    public HatType currentHatType;
     //[SerializeField] private GameObject menu;
 
 
@@ -19,12 +21,19 @@ public class SkinShopContent : Singleton<SkinShopContent>
 
     private void SpawnHatSkin()
     {
-        for (int i = 0; i < hatData.hatDataList.Count; i++)
+        for (int i = 0; i < hatDataSO.hatDataList.Count; i++)
         {
             SkinButton skinButton = Instantiate(skinBtnPrefab, skinItemParent);
-            skinButton.hatData = hatData.hatDataList[i];
-            skinButton.hatImage.sprite = hatData.hatDataList[i].hatImage;
+            skinButton.hatData = hatDataSO.hatDataList[i];
+            skinButton.hatImage.sprite = hatDataSO.hatDataList[i].hatImage;
+            skinButtonList.Add(skinButton);
         }
+    }
+
+    public HatType SetCurrentHatSelected(SkinButton skinBtn) //set equpped hat
+    {
+        currentHatType = skinBtn.hatData.hatType;
+        return currentHatType;
     }
 
     private void SpawnPantSkin()

@@ -85,7 +85,7 @@ public class ShopManager : Singleton<ShopManager>
         {
             data.EquippedWeapon = currentWeapShownIndex;
             SaveManager.Instance.SaveData(data);
-            LevelManager.Instance.player.OnInit();
+            LevelManager.Instance.player.ChangeWeapon();
         }
     }
 

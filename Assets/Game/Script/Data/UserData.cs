@@ -34,11 +34,11 @@ public class UserData
     public UserData()
     {
         EquippedWeapon = 0;
-        EquippedHat = 0;
+        EquippedHat = 1;
         CurrentCoins = 100;
         BoughtWeapons.Add(0);
         //BoughtHats.Add(HatType.Arrow);
-        BoughtHats.Add(0);
+        BoughtHats.Add(1);
         Username = "New Player";
     }
 }
