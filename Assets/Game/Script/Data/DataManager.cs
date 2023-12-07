@@ -5,6 +5,7 @@ using UnityEngine;
 public class DataManager : Singleton<DataManager>
 {
     public WeaponDataSO weaponDataSO;
+    public HatDataSO hatDataSO;
 
     //public WeaponData GetWeaponData(WeaponType weaponType)
     //{
@@ -24,5 +25,18 @@ public class DataManager : Singleton<DataManager>
     public WeaponData GetWeaponData(int weaponIndex)
     {
         return weaponDataSO.weaponDataList[weaponIndex];
+    }
+
+    public HatData GetHatData(HatType hatType)
+    {
+        for (int i = 0; i < hatDataSO.hatDataList.Count; i++)
+        {
+            if (hatDataSO.hatDataList[i].hatType == hatType)
+            {
+                return hatDataSO.hatDataList[i];
+            }
+        }
+        return null;
+        
     }
 }

@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private int killCountToGrow = 5;
     [SerializeField] internal WeaponData weaponData;
+    [SerializeField] internal HatData hatData;
     [NonSerialized] protected float lastAutoAttackTime;
     [SerializeField] protected float attackRange;
     [SerializeField] protected float moveSpeed;
@@ -35,7 +36,9 @@ public class Character : MonoBehaviour
     public LayerMask enemyLayer;
     public Collider charCollider;
     protected Weapon weaponInstance;
-    
+    [SerializeField] protected GameObject hatInstance;
+
+
 
     protected virtual void Start()
     {
@@ -60,12 +63,18 @@ public class Character : MonoBehaviour
         {
             bulletPrefab = weaponData.bullet;
         }
+        if(hatData != null)
+        {
+            ChangeHat();
+        }
+
+        SetAttackRange();
     }
 
     public void ChangeWeapon()
     {
         weaponData = DataManager.Instance.GetWeaponData(GameManager.Instance.UserData.EquippedWeapon);
-        attackRange = weaponData.autoAttackRange;
+        //attackRange = weaponData.autoAttackRange;
         if (weaponInstance == null)
         {
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
@@ -76,6 +85,28 @@ public class Character : MonoBehaviour
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
         }
         weaponInstance.transform.parent = weaponHoldingPos;
+    }
+
+    public void ChangeHat()
+    {
+        hatData = DataManager.Instance.GetHatData((HatType)GameManager.Instance.UserData.EquippedHat);
+        //Debug.Log(hatData.hatType.ToString());
+        Debug.Log("Anh Quoc Viet Dep Trai Cute De Thuong <3 <3 <3");
+        //attackRange += hatData.range;
+        if (hatInstance == null)
+        {
+            hatInstance = Instantiate(hatData.hatPrefab, hatPos);
+        }
+        else
+        {
+            Destroy(hatInstance.gameObject);
+            hatInstance = Instantiate(hatData.hatPrefab, hatPos);
+        }
+    }
+
+    private void SetAttackRange()
+    {
+        attackRange = weaponData.autoAttackRange + hatData.range; 
     }
 
     protected virtual void OnHit()

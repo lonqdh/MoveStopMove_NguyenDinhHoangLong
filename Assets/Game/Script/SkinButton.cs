@@ -14,15 +14,9 @@ public class SkinButton : MonoBehaviour
     private GameObject previewHat;
     private bool previewingHat;
     public Image hatImage;
-
     private void Start()
     {
         skinButton.onClick.AddListener(SkinButtonOnClick);
-    }
-
-    public void SetData()
-    {
-        skinButton.onClick.AddListener(() => SkinButtonOnClick());
     }
 
     private void SkinButtonOnClick()
@@ -34,16 +28,10 @@ public class SkinButton : MonoBehaviour
 
     private void PreviewHat()
     {
-        if (previewingHat = true) //trick lord
-        {
-            Debug.Log("Despawning previous hat");
-            LeanPool.DespawnAll();
-
-        }
-
-        Debug.Log("Spawning new hat");
-        previewHat = LeanPool.Spawn(this.hatData.hatPrefab, Vector3.zero, Quaternion.identity);
-        previewHat.transform.SetParent(LevelManager.Instance.player.hatPos, false);
-        previewingHat = true;
+        SkinShopContent.Instance.DespawnHat();
+        previewHat = LeanPool.Spawn(this.hatData.hatPrefab, LevelManager.Instance.player.hatPos);
+        SkinShopContent.Instance.hatList.Add(previewHat);
+        //previewingHat = true;
     }
+   
 }

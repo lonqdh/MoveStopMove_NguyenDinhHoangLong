@@ -53,7 +53,6 @@ public class Bot : Character
     private void GetRandomWeapon()
     {
         //int randWeapIndex = Random.Range(0, weaponDataSO.weaponDataList.Count);
-        Debug.Log(DataManager.Instance.weaponDataSO.weaponDataList.Count);
         int randWeapIndex = Random.Range(0, DataManager.Instance.weaponDataSO.weaponDataList.Capacity);
         weaponData = DataManager.Instance.weaponDataSO.weaponDataList[randWeapIndex];
 

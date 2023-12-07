@@ -19,6 +19,15 @@ public class SkinShopManager : Singleton<SkinShopManager>
         hatBtn.onClick.AddListener(ShowHatSkinList);
         //pantBtn.onClick.AddListener(ShowPantSkinList);
         buySkinBtn.onClick.AddListener(BuySkin);
+        closeSkinShopBtn.onClick.AddListener(CloseSkinShop);
+
+    }
+
+    private void CloseSkinShop()
+    {
+        SkinShopContent.Instance.DespawnHat();
+        UIManager.Instance.skinShopUI.SetActive(false);
+        UIManager.Instance.mainMenuUI.SetActive(true);
 
     }
 

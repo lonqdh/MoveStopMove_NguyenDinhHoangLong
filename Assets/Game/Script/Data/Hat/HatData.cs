@@ -23,7 +23,7 @@ public class HatData
     public HatType hatType;
     public GameObject hatPrefab;
     public Sprite hatImage;
-    public int range;
+    public float range;
     public int hatPrice;
     
 

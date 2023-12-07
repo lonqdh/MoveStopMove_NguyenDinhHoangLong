@@ -1,12 +1,14 @@
+using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkinShopContent : MonoBehaviour
+public class SkinShopContent : Singleton<SkinShopContent>
 {
     [SerializeField] private HatDataSO hatData;
     [SerializeField] private SkinButton skinBtnPrefab;
     [SerializeField] private Transform skinItemParent;
+    public List<GameObject> hatList = new List<GameObject>();
     //[SerializeField] private GameObject menu;
 
 
@@ -30,5 +32,13 @@ public class SkinShopContent : MonoBehaviour
 
     }
 
+    public void DespawnHat()
+    {
+        if (hatList.Count > 0)
+        {
+            LeanPool.Despawn(hatList[0].gameObject);
+            hatList.Clear();
+        }
+    }
 
 }
