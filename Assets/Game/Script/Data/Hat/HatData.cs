@@ -25,6 +25,4 @@ public class HatData
     public Sprite hatImage;
     public float range;
     public int hatPrice;
-    
-
 }

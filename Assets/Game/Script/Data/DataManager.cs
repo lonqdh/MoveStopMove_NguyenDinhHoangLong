@@ -6,6 +6,8 @@ public class DataManager : Singleton<DataManager>
 {
     public WeaponDataSO weaponDataSO;
     public HatDataSO hatDataSO;
+    public PantDataSO pantDataSO;
+
 
     //public WeaponData GetWeaponData(WeaponType weaponType)
     //{
@@ -38,5 +40,18 @@ public class DataManager : Singleton<DataManager>
         }
         return null;
         
+    }
+
+    public PantData GetPantData(PantType pantType)
+    {
+        for (int i = 0; i < pantDataSO.pantDataList.Count; i++)
+        {
+            if (pantDataSO.pantDataList[i].PantType == pantType)
+            {
+                return pantDataSO.pantDataList[i];
+            }
+        }
+        return null;
+
     }
 }

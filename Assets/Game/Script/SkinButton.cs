@@ -10,10 +10,15 @@ public class SkinButton : MonoBehaviour
 {
     [SerializeField] private Button skinButton;
     [NonSerialized] public HatData hatData;
-    //[NonSerialized] public PantData pantData;
+    [NonSerialized] public PantData pantData;
     private GameObject previewHat;
+    private Material previewPant;
     private bool previewingHat;
-    public Image hatImage;
+    public Image skinImage;
+
+    //public delegate void SkinBoughtDelegate();
+    //public static event SkinBoughtDelegate OnSkinBought;
+
     private void Start()
     {
         skinButton.onClick.AddListener(SkinButtonOnClick);
@@ -21,23 +26,46 @@ public class SkinButton : MonoBehaviour
 
     private void SkinButtonOnClick()
     {
-        SkinShopManager.Instance.skinPrice.SetText(this.hatData.hatPrice.ToString());
-        SkinShopManager.Instance.skinStats.SetText("+" + this.hatData.range.ToString());
-        PreviewHat();
+        if (/*SkinShopManager.Instance.currentSession != 1*/ this.pantData != null)
+        {
+            SkinShopManager.Instance.skinPrice.SetText(this.pantData.PantPrice.ToString());
+            SkinShopManager.Instance.skinStats.SetText("+" + this.pantData.Speed.ToString());
+        }
+        else
+        {
+            SkinShopManager.Instance.skinPrice.SetText(this.hatData.hatPrice.ToString());
+            SkinShopManager.Instance.skinStats.SetText("+" + this.hatData.range.ToString());
+            
+        }
+        
+        PreviewSkin();
+
     }
 
-    private void PreviewHat()
+    private void PreviewSkin()
     {
-        if(LevelManager.Instance.player.hatInstance != null)
+        if(this.hatData != null)
         {
-            LevelManager.Instance.player.hatInstance.SetActive(false); //an mu dang mac di de preview mu~ trong shop
+            if (LevelManager.Instance.player.hatInstance != null)
+            {
+                LevelManager.Instance.player.hatInstance.SetActive(false); //an mu dang mac di de preview mu~ trong shop
+            }
+
+            SkinShopContent.Instance.DespawnHat();
+            SkinShopManager.Instance.ShowSkinAvailability(this);
+            SkinShopContent.Instance.SetCurrentHatSelected(this); // set current hat selected
+            previewHat = LeanPool.Spawn(this.hatData.hatPrefab, LevelManager.Instance.player.hatPos);
+            SkinShopContent.Instance.hatList.Add(previewHat);
         }
-        SkinShopContent.Instance.DespawnHat();
-        SkinShopManager.Instance.ShowHatSkinAvailability(this);
-        SkinShopContent.Instance.SetCurrentHatSelected(this); // set equipped hat
-        previewHat = LeanPool.Spawn(this.hatData.hatPrefab, LevelManager.Instance.player.hatPos);
-        SkinShopContent.Instance.hatList.Add(previewHat);
-        //previewingHat = true;
+        else
+        {
+            //LevelManager.Instance.player.pantInstance.GetComponent<SkinnedMeshRenderer>().material = this.pantData.PantMaterial;
+            //previewPant = this.pantData.PantMaterial;
+            SkinShopManager.Instance.ShowSkinAvailability(this);
+            SkinShopContent.Instance.SetCurrentPantSelected(this); // set current pant selected
+            //SkinShopContent.Instance.pantList.Add(previewPant);
+        }
+
     }
-   
+
 }

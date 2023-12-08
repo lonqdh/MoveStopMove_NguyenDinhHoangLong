@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
 
         float distanceFromAttacker = Vector3.Distance(bulletTransform.position, attacker.transform.position);
 
-        if (distanceFromAttacker > attacker.weaponData.autoAttackRange)
+        if (distanceFromAttacker > attacker.attackRange)
         {
             OnDespawn();
         }

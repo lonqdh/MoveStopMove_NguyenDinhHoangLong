@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skinButton: {fileID: 1198298373132211113}
-  hatImage: {fileID: 633016035848292056}
+  skinImage: {fileID: 633016035848292056}
 --- !u!1 &7227477853043409353
 GameObject:
   m_ObjectHideFlags: 0

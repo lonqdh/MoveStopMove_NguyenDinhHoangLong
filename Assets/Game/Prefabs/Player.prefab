@@ -239,7 +239,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19ab7abac52db5e45b12fda3e1678d79, type: 2}
+  - {fileID: 2100000, guid: 24bae78f2b5d35d49ab521532acc67e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -333,6 +333,12 @@ MonoBehaviour:
     autoAttackRange: 0
     attackSpeed: 0
     price: 0
+  pantData:
+    PantType: 0
+    PantMaterial: {fileID: 0}
+    PantImage: {fileID: 0}
+    PantPrice: 0
+    Speed: 0
   hatData:
     hatType: 0
     hatPrefab: {fileID: 0}
@@ -353,6 +359,7 @@ MonoBehaviour:
     m_Bits: 8
   charCollider: {fileID: 4303239860878448821}
   hatInstance: {fileID: 0}
+  pantInstance: {fileID: 2896820973505069099}
   joystick: {fileID: 0}
   rigidbody: {fileID: 8559884618313162121}
   attackRangeCircle: {fileID: 2674662018765463896}
@@ -729,6 +736,11 @@ PrefabInstance:
 --- !u!4 &2353246817582222908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3220319501169496967, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
+  m_PrefabInstance: {fileID: 8351725376154231365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2896820973505069099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2606217863934893458, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 8351725376154231365}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &3935580051098061151 stripped

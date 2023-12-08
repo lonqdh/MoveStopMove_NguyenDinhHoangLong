@@ -15,63 +15,134 @@ public class SkinShopManager : Singleton<SkinShopManager>
     public TextMeshProUGUI skinPrice;
     public TextMeshProUGUI skinStats;
     private UserData data;
+    //public bool hatSession;
+    //public bool pantSession;
+    public int currentSession;
+
 
     private void Start()
     {
         data = GameManager.Instance.UserData;
         hatBtn.onClick.AddListener(ShowHatSkinList);
-        //pantBtn.onClick.AddListener(ShowPantSkinList);
-        buySkinBtn.onClick.AddListener(BuyHatSkin);
+        pantBtn.onClick.AddListener(ShowPantSkinList);
+        buySkinBtn.onClick.AddListener(BuySkin);
         closeSkinShopBtn.onClick.AddListener(CloseSkinShop);
-
     }
 
     private void CloseSkinShop()
     {
         SkinShopContent.Instance.DespawnHat();
+        //SkinShopContent.Instance.DespawnPant();
         LevelManager.Instance.player.hatInstance.SetActive(true); //bat lai mu~ dang equip
         UIManager.Instance.skinShopUI.SetActive(false);
         UIManager.Instance.mainMenuUI.SetActive(true);
+        currentSession = 2;
     }
 
-    public void ShowHatSkinAvailability(SkinButton skinBtn)
+    public void ShowSkinAvailability(SkinButton skinBtn)
     {
-        if(data.BoughtHats.Contains((int)skinBtn.hatData.hatType))
+        if (currentSession == 1)
         {
-            skinPrice.SetText("Equip");
+            if (data.BoughtHats.Contains((int)skinBtn.hatData.hatType))
+            {
+                skinPrice.SetText("Equip");
+            }
+            else
+            {
+                skinPrice.SetText(skinBtn.hatData.hatPrice.ToString());
+            }
+        }
+        else if(currentSession == 0)
+        {
+            if (data.BoughtPants.Contains((int)skinBtn.pantData.PantType))
+            {
+                skinPrice.SetText("Equip");
+            }
+            else
+            {
+                skinPrice.SetText(skinBtn.pantData.PantPrice.ToString());
+            }
         }
         else
         {
-            skinPrice.SetText(skinBtn.hatData.hatPrice.ToString());
+            return;
         }
     }
 
-    private void BuyHatSkin()
+    private void BuySkin()
     {
-        if(!data.BoughtHats.Contains((int)SkinShopContent.Instance.currentHatType) && data.CurrentCoins >= int.Parse(skinPrice.text))
+        if(currentSession == 1)
         {
-            data.BoughtHats.Add((int)SkinShopContent.Instance.currentHatType);
-            data.CurrentCoins = data.CurrentCoins - int.Parse(skinPrice.text);
+            if (!data.BoughtHats.Contains((int)SkinShopContent.Instance.currentHatType) && data.CurrentCoins >= int.Parse(skinPrice.text))
+            {
+                data.BoughtHats.Add((int)SkinShopContent.Instance.currentHatType);
+                data.CurrentCoins = data.CurrentCoins - int.Parse(skinPrice.text);
+            }
+            //OnSkinBought?.Invoke();
             //currentCoinLeft.SetText(data.CurrentCoins.ToString());
-            UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
-            SaveManager.Instance.SaveData(data);
             //currentCoinLeft.SetText(data.CurrentCoins.ToString());
         }
+        else if(currentSession == 0)
+        {
+            if(!data.BoughtPants.Contains((int)SkinShopContent.Instance.currentPantType) && data.CurrentCoins >= int.Parse(skinPrice.text))
+            {
+                data.BoughtPants.Add((int)SkinShopContent.Instance.currentPantType);
+                data.CurrentCoins = data.CurrentCoins - int.Parse(skinPrice.text);
+            }
+        }
+
+
+        UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
+        SaveManager.Instance.SaveData(data);
+
         if (skinPrice.text == "Equip")
         {
-            data.EquippedHat = (int)SkinShopContent.Instance.currentHatType;
+            if (currentSession == 1)
+            {
+                data.EquippedHat = (int)SkinShopContent.Instance.currentHatType;
+                LevelManager.Instance.player.ChangeHat();
+            }
+            else
+            {
+                data.EquippedPant = (int)SkinShopContent.Instance.currentPantType;
+                LevelManager.Instance.player.ChangePant();
+            }
+
             SaveManager.Instance.SaveData(data);
-            LevelManager.Instance.player.ChangeHat();
+            LevelManager.Instance.player.SetAttackRange();
+            LevelManager.Instance.player.ScaleAttackRangeCircle();
         }
     }
 
     private void ShowPantSkinList()
     {
-        
+        if (currentSession == 0)
+        {
+            return;
+        }
+
+        currentSession = 0;
+        SkinShopContent.Instance.SpawnSkin();
+
     }
 
     private void ShowHatSkinList()
     {
-        
+        //if(hatSession == true)
+        //{
+        //    return;
+        //}
+
+        //hatSession = true;
+        //SkinShopContent.Instance.SpawnSkin();
+
+        if (currentSession == 1)
+        {
+            return;
+        }
+
+        currentSession = 1;
+        SkinShopContent.Instance.SpawnSkin();
+
     }
 }

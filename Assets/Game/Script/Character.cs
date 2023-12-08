@@ -14,9 +14,10 @@ public class Character : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private int killCountToGrow = 5;
     [SerializeField] internal WeaponData weaponData;
+    [SerializeField] internal PantData pantData;
     [SerializeField] internal HatData hatData;
     [NonSerialized] protected float lastAutoAttackTime;
-    [SerializeField] protected float attackRange;
+    public float attackRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotateSpeed;
     
@@ -36,7 +37,10 @@ public class Character : MonoBehaviour
     public LayerMask enemyLayer;
     public Collider charCollider;
     protected Weapon weaponInstance;
-    [SerializeField] public GameObject hatInstance;
+    public GameObject hatInstance;
+    //public Material pantInstance;
+    public GameObject pantInstance;
+
 
 
 
@@ -67,9 +71,13 @@ public class Character : MonoBehaviour
         {
             ChangeHat();
         }
-
-        SetAttackRange();
+        if(pantData != null)
+        {
+            ChangePant();
+        }
     }
+
+   
 
     public void ChangeWeapon()
     {
@@ -85,6 +93,7 @@ public class Character : MonoBehaviour
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
         }
         weaponInstance.transform.parent = weaponHoldingPos;
+        SetAttackRange();
     }
 
     public void ChangeHat()
@@ -102,11 +111,24 @@ public class Character : MonoBehaviour
             Destroy(hatInstance.gameObject);
             hatInstance = Instantiate(hatData.hatPrefab, hatPos);
         }
+        SetAttackRange();
     }
 
-    private void SetAttackRange()
+    public void ChangePant()
     {
-        attackRange = weaponData.autoAttackRange + hatData.range; 
+        pantData = DataManager.Instance.GetPantData((PantType)GameManager.Instance.UserData.EquippedPant);
+        pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+        SetCharMoveSpeed();
+    }
+    
+    private void SetCharMoveSpeed()
+    {
+        moveSpeed = pantData.Speed;
+    }
+
+    public void SetAttackRange()
+    {
+        attackRange = weaponData.autoAttackRange + hatData.range;
     }
 
     protected virtual void OnHit()
@@ -214,7 +236,7 @@ public class Character : MonoBehaviour
         if (weaponData != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, weaponData.autoAttackRange);
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
     }
 

@@ -121,7 +121,7 @@ public class Player : Character
             }
         }
     }
-    private void ScaleAttackRangeCircle()
+    public void ScaleAttackRangeCircle()
     {
         if (attackRangeCircle != null)
         {
