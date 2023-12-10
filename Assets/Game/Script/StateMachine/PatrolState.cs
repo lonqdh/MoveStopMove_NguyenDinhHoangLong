@@ -55,11 +55,11 @@ public class PatrolState : IState<Bot>
             // Check if the bot is moving
             if (bot.agent.velocity.magnitude > 0.1f)
             {
-                bot.ChangeAnim("Run");
+                bot.ChangeAnim(Constant.ANIM_RUN);
             }
             else
             {
-                bot.ChangeAnim("IsIdle"); 
+                bot.ChangeAnim(Constant.ANIM_IDLE); 
             }
         }
     }

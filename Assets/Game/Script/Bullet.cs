@@ -72,7 +72,6 @@ public class Bullet : MonoBehaviour
             if (bulletTransform != null)
             {
                 bulletTransform.localScale *= attacker.charScale;
-                Debug.Log(attacker.name + ", " + attacker.charScale + " bullet size: " + bulletTransform.localScale);
             }
             else
             {

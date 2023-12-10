@@ -52,14 +52,12 @@ public class Bot : Character
     
     private void GetRandomWeapon()
     {
-        //int randWeapIndex = Random.Range(0, weaponDataSO.weaponDataList.Count);
         int randWeapIndex = Random.Range(0, DataManager.Instance.weaponDataSO.weaponDataList.Capacity);
         weaponData = DataManager.Instance.weaponDataSO.weaponDataList[randWeapIndex];
 
         if (weaponInstance == null)
         {
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
-            attackRange = weaponData.autoAttackRange;
         }
         else
         {
@@ -67,8 +65,45 @@ public class Bot : Character
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
             attackRange = weaponData.autoAttackRange;
         }
+            SetAttackRange();
+            SetAttackSpeed();
 
         weaponInstance.transform.parent = weaponHoldingPos;
+    }
+
+    private void GetRandomHat()
+    {
+        int randHatIndex = Random.Range(0, DataManager.Instance.hatDataSO.hatDataList.Capacity);
+        hatData = DataManager.Instance.hatDataSO.hatDataList[randHatIndex];
+
+        if (hatInstance == null)
+        {
+            hatInstance = Instantiate(hatData.hatPrefab, hatPos);
+        }
+        else
+        {
+            Destroy(hatInstance.gameObject);
+            hatInstance = Instantiate(hatData.hatPrefab, hatPos);
+        }
+
+        SetAttackRange();
+        //hatInstance.transform.parent = hatPos;
+    }
+
+    private void GetRandomPant()
+    {
+        int randPantIndex = Random.Range(0, DataManager.Instance.pantDataSO.pantDataList.Capacity);
+        pantData = DataManager.Instance.pantDataSO.pantDataList[randPantIndex];
+
+        if (pantInstance == null)
+        {
+            pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+        }
+        else
+        {
+            pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+        }
+        SetCharMoveSpeed();
     }
 
     private void DetectEnemies()
@@ -108,7 +143,7 @@ public class Bot : Character
                 // Stop moving
                 agent.isStopped = true;
                 //agent.SetDestination(transform.position); // dung cai nay doc lap thi se bi loi bot dung yen lai ban xong di chuyen luon, va dung cai nay se loi khi nvat dung lai se slide di
-                ChangeAnim("IsIdle");
+                ChangeAnim(Constant.ANIM_IDLE);
 
                 Vector3 direction = nearestEnemy.position - throwPoint.position;
                 direction.Normalize();
@@ -156,6 +191,14 @@ public class Bot : Character
         {
             bulletPrefab = weaponData.bullet;
         }
+        if (hatData != null)
+        {
+            GetRandomHat();
+        }
+        if (pantData != null)
+        {
+            GetRandomPant();
+        }
 
         ChangeState(new PatrolState());
 
@@ -189,7 +232,7 @@ private void OnDespawn()
         this.gameObject.layer = defaultLayerNumber;
         agent.isStopped = true;
         IsDead = true;
-        ChangeAnim("IsDead");
+        ChangeAnim(Constant.ANIM_DIE);
         Invoke(nameof(OnDespawn), 2f);
 
     }

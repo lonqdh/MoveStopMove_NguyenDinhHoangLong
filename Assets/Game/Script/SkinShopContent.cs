@@ -59,13 +59,13 @@ public class SkinShopContent : Singleton<SkinShopContent>
         skinButtonList.Clear();
     }
 
-    public HatType SetCurrentHatSelected(SkinButton skinBtn) // set current hat selected
+    public HatType SetCurrentHatSelected(SkinButton skinBtn) // set current hat selected de biet thg nao con mua, con equip
     {
         currentHatType = skinBtn.hatData.hatType;
         return currentHatType;
     }
 
-    public PantType SetCurrentPantSelected(SkinButton skinBtn) // set current pant selected
+    public PantType SetCurrentPantSelected(SkinButton skinBtn) // set current pant selected de biet thg nao con mua, con equip
     {
         currentPantType = skinBtn.pantData.PantType;
         return currentPantType;

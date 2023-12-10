@@ -62,13 +62,13 @@ public class Player : Character
 
             // Allow forward movement
             rigidbody.velocity = new Vector3(moveVector.x, rigidbody.velocity.y, moveVector.z);
-            ChangeAnim("Run");
+            ChangeAnim(Constant.ANIM_RUN);
 
         }
         else if (moveVector == Vector3.zero)
         {
             rigidbody.velocity = Vector3.zero;
-            ChangeAnim("IsIdle");
+            ChangeAnim(Constant.ANIM_IDLE);
         }
     }
 

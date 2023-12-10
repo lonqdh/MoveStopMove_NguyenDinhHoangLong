@@ -1,6 +1,7 @@
 using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,9 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private Transform weaponShopPosition;
     private Weapon weaponModel;
     private UserData data;
-    private int currentWeapShownIndex = 0;
+    //private int currentWeapShownIndex = 0;
+    private WeaponType currentWeapShownIndex = (WeaponType)0;
+
 
     void Start()
     {
@@ -37,29 +40,29 @@ public class ShopManager : Singleton<ShopManager>
         SetWeaponsAvailability(currentWeapShownIndex);
     }
 
-    private void showWeapon(int weaponIndex)
+    private void showWeapon(/*int weaponIndex*/ WeaponType currentWeaponType)
     {
         if(weaponModel == null)
         {
-            weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            weaponModel = Instantiate(WeaponDataSO.weaponDataList[(int)currentWeaponType].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             weaponModel.transform.parent = weaponShopPosition;
-            weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[weaponIndex].price.ToString());
+            weaponName.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].weaponType.ToString());
+            weaponPrice.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].price.ToString());
         }
         else
         {
             Destroy(weaponModel.gameObject);
-            weaponModel = Instantiate(WeaponDataSO.weaponDataList[weaponIndex].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
+            weaponModel = Instantiate(WeaponDataSO.weaponDataList[(int)currentWeaponType].weapon, weaponShopPosition.position, weaponShopPosition.rotation);
             weaponModel.transform.parent = weaponShopPosition;
-            weaponName.SetText(WeaponDataSO.weaponDataList[weaponIndex].weaponType.ToString());
-            weaponPrice.SetText(WeaponDataSO.weaponDataList[weaponIndex].price.ToString());
+            weaponName.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].weaponType.ToString());
+            weaponPrice.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].price.ToString());
         }
         
     }
 
-    private void SetWeaponsAvailability(int currentWeapIndex)
+    private void SetWeaponsAvailability(/*int currentWeapIndex*/ WeaponType currentWeaponType)
     {
-        if (data.BoughtWeapons.Contains(currentWeapIndex))
+        if (data.BoughtWeapons.Contains((int)currentWeaponType))
         {
             weaponAvailability.SetText("Owned");
             weaponPrice.SetText("Equip");
@@ -72,10 +75,10 @@ public class ShopManager : Singleton<ShopManager>
 
     public void BuyWeapon()
     {
-        if (!data.BoughtWeapons.Contains(currentWeapShownIndex) && data.CurrentCoins >= WeaponDataSO.weaponDataList[currentWeapShownIndex].price)
+        if (!data.BoughtWeapons.Contains((int)currentWeapShownIndex) && data.CurrentCoins >= WeaponDataSO.weaponDataList[(int)currentWeapShownIndex].price)
         {
-            data.BoughtWeapons.Add(currentWeapShownIndex);
-            data.CurrentCoins = data.CurrentCoins - WeaponDataSO.weaponDataList[currentWeapShownIndex].price;
+            data.BoughtWeapons.Add((int)currentWeapShownIndex);
+            data.CurrentCoins = data.CurrentCoins - WeaponDataSO.weaponDataList[(int)currentWeapShownIndex].price;
             currentCoinLeft.SetText(data.CurrentCoins.ToString());
             UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
             SaveManager.Instance.SaveData(data);
@@ -83,7 +86,7 @@ public class ShopManager : Singleton<ShopManager>
         }
         if (weaponPrice.text == "Equip")
         {
-            data.EquippedWeapon = currentWeapShownIndex;
+            data.EquippedWeapon = (int)currentWeapShownIndex;
             SaveManager.Instance.SaveData(data);
             LevelManager.Instance.player.ChangeWeapon();
             LevelManager.Instance.player.SetAttackRange();
@@ -101,9 +104,9 @@ public class ShopManager : Singleton<ShopManager>
 
     public void NextWeaponInShop()
     {
-        if (currentWeapShownIndex == 2)
+        if ((int)currentWeapShownIndex == 2)
         {
-            currentWeapShownIndex = 0;
+            currentWeapShownIndex = (WeaponType)0;
 
             //weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
             //weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
@@ -123,7 +126,8 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (currentWeapShownIndex == 0)
         {
-            currentWeapShownIndex = 2;
+            currentWeapShownIndex = (WeaponType)2;
+
             showWeapon(currentWeapShownIndex);
         }
         else

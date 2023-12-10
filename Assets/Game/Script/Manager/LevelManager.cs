@@ -100,12 +100,9 @@ public class LevelManager : Singleton<LevelManager>
         {
             Debug.Log("Finished Game!");
         }
-        else
-        {
-            Debug.LogError("Attempting to despawn a null bot.");
-        }
+        //else
+        //{
+        //    Debug.LogError("Attempting to despawn a null bot.");
+        //}
     }
-
-    //lam cai spawn bot kphai dua tren diem co san nua, tu random tren plane
-
 }

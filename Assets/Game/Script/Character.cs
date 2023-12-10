@@ -20,12 +20,12 @@ public class Character : MonoBehaviour
     public float attackRange;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotateSpeed;
-    
-    
+    [SerializeField] protected float attackSpeed;
+
+
     [SerializeField] private float growthFactor = 1.2f;
     
     //private BoxCollider bulletCollider;
-    //private WeaponType defaultCurrentWeapon = WeaponType.Hammer;
     protected string currentAnimName = "";
     protected int defaultLayerNumber = 0;
     protected int currentKillCount = 0;
@@ -38,7 +38,6 @@ public class Character : MonoBehaviour
     public Collider charCollider;
     protected Weapon weaponInstance;
     public GameObject hatInstance;
-    //public Material pantInstance;
     public GameObject pantInstance;
 
 
@@ -94,14 +93,12 @@ public class Character : MonoBehaviour
         }
         weaponInstance.transform.parent = weaponHoldingPos;
         SetAttackRange();
+        SetAttackSpeed();
     }
 
     public void ChangeHat()
     {
         hatData = DataManager.Instance.GetHatData((HatType)GameManager.Instance.UserData.EquippedHat);
-        //Debug.Log(hatData.hatType.ToString());
-        //Debug.Log("Anh Quoc Viet Dep Trai Cute De Thuong <3 <3 <3");
-        //attackRange += hatData.range;
         if (hatInstance == null)
         {
             hatInstance = Instantiate(hatData.hatPrefab, hatPos);
@@ -121,7 +118,7 @@ public class Character : MonoBehaviour
         SetCharMoveSpeed();
     }
     
-    private void SetCharMoveSpeed()
+    protected void SetCharMoveSpeed()
     {
         moveSpeed = pantData.Speed;
     }
@@ -129,6 +126,11 @@ public class Character : MonoBehaviour
     public void SetAttackRange()
     {
         attackRange = weaponData.autoAttackRange + hatData.range;
+    }
+
+    public void SetAttackSpeed()
+    {
+        attackSpeed = weaponData.attackSpeed;
     }
 
     protected virtual void OnHit()
@@ -140,7 +142,7 @@ public class Character : MonoBehaviour
     protected virtual void OnDeath()
     {
         IsDead = true;
-        ChangeAnim("IsDead");
+        ChangeAnim(Constant.ANIM_DIE);
         Invoke(nameof(OnDespawn), 2f);
     }
 
@@ -184,12 +186,14 @@ public class Character : MonoBehaviour
 
             transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
 
-            ChangeAnim("IsAttack");
+            ChangeAnim(Constant.ANIM_ATTACK);
 
             Bullet bullet = LeanPool.Spawn(weaponData.bullet, throwPoint.position, throwPoint.rotation);
             //bullet.attacker = this;
             bullet.OnInit(this);
-            bullet.bulletRigidbody.velocity = direction.normalized * 5f;
+            //bullet.bulletRigidbody.velocity = direction.normalized * 5f;
+            bullet.bulletRigidbody.velocity = direction.normalized * attackSpeed;
+
 
             // Set the cooldown timer
             lastAutoAttackTime = Time.time;

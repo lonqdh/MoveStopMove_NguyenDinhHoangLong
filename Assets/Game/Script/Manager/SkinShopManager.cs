@@ -32,7 +32,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
     private void CloseSkinShop()
     {
         SkinShopContent.Instance.DespawnHat();
-        //SkinShopContent.Instance.DespawnPant();
+        LevelManager.Instance.player.OnInit();
         LevelManager.Instance.player.hatInstance.SetActive(true); //bat lai mu~ dang equip
         UIManager.Instance.skinShopUI.SetActive(false);
         UIManager.Instance.mainMenuUI.SetActive(true);
@@ -52,7 +52,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
                 skinPrice.SetText(skinBtn.hatData.hatPrice.ToString());
             }
         }
-        else if(currentSession == 0)
+        else if (currentSession == 0)
         {
             if (data.BoughtPants.Contains((int)skinBtn.pantData.PantType))
             {
@@ -71,29 +71,29 @@ public class SkinShopManager : Singleton<SkinShopManager>
 
     private void BuySkin()
     {
-        if(currentSession == 1)
+        if (currentSession == 1)
         {
             if (!data.BoughtHats.Contains((int)SkinShopContent.Instance.currentHatType) && data.CurrentCoins >= int.Parse(skinPrice.text))
             {
                 data.BoughtHats.Add((int)SkinShopContent.Instance.currentHatType);
                 data.CurrentCoins = data.CurrentCoins - int.Parse(skinPrice.text);
+                UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
+                SaveManager.Instance.SaveData(data);
             }
             //OnSkinBought?.Invoke();
             //currentCoinLeft.SetText(data.CurrentCoins.ToString());
             //currentCoinLeft.SetText(data.CurrentCoins.ToString());
         }
-        else if(currentSession == 0)
+        else if (currentSession == 0)
         {
-            if(!data.BoughtPants.Contains((int)SkinShopContent.Instance.currentPantType) && data.CurrentCoins >= int.Parse(skinPrice.text))
+            if (!data.BoughtPants.Contains((int)SkinShopContent.Instance.currentPantType) && data.CurrentCoins >= int.Parse(skinPrice.text))
             {
                 data.BoughtPants.Add((int)SkinShopContent.Instance.currentPantType);
                 data.CurrentCoins = data.CurrentCoins - int.Parse(skinPrice.text);
+                UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
+                SaveManager.Instance.SaveData(data);
             }
         }
-
-
-        UIManager.Instance.coinText.SetText(data.CurrentCoins.ToString());
-        SaveManager.Instance.SaveData(data);
 
         if (skinPrice.text == "Equip")
         {
@@ -112,6 +112,8 @@ public class SkinShopManager : Singleton<SkinShopManager>
             LevelManager.Instance.player.SetAttackRange();
             LevelManager.Instance.player.ScaleAttackRangeCircle();
         }
+
+
     }
 
     private void ShowPantSkinList()
@@ -122,20 +124,13 @@ public class SkinShopManager : Singleton<SkinShopManager>
         }
 
         currentSession = 0;
+        SkinShopContent.Instance.DespawnHat();
         SkinShopContent.Instance.SpawnSkin();
 
     }
 
     private void ShowHatSkinList()
     {
-        //if(hatSession == true)
-        //{
-        //    return;
-        //}
-
-        //hatSession = true;
-        //SkinShopContent.Instance.SpawnSkin();
-
         if (currentSession == 1)
         {
             return;
