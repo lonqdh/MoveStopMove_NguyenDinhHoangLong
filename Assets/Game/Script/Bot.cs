@@ -7,9 +7,9 @@ using UnityEngine.AI;
 public class Bot : Character
 {
     private IState<Bot> currentState;
-    private int botLayerNumber = 3;
+    //private int botLayerNumber = 3;
     //private Bullet bullet;
-    
+
     public NavMeshAgent agent;
     public Vector3 walkPoint;
     public bool walkPointSet;
@@ -49,7 +49,7 @@ public class Bot : Character
         }
     }
 
-    
+
     private void GetRandomWeapon()
     {
         int randWeapIndex = Random.Range(0, DataManager.Instance.weaponDataSO.weaponDataList.Capacity);
@@ -65,8 +65,8 @@ public class Bot : Character
             weaponInstance = Instantiate(weaponData.weapon, weaponHoldingPos.position, weaponHoldingPos.rotation);
             attackRange = weaponData.autoAttackRange;
         }
-            SetAttackRange();
-            SetAttackSpeed();
+        SetAttackRange();
+        SetAttackSpeed();
 
         weaponInstance.transform.parent = weaponHoldingPos;
     }
@@ -97,11 +97,11 @@ public class Bot : Character
 
         if (pantInstance == null)
         {
-            pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+            pantInstance.material = pantData.PantMaterial;
         }
         else
         {
-            pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+            pantInstance.material = pantData.PantMaterial;
         }
         SetCharMoveSpeed();
     }
@@ -125,7 +125,7 @@ public class Bot : Character
 
             for (int i = 0; i < numEnemies; i++)
             {
-                if(charCollider == hitColliders[i])
+                if (charCollider == hitColliders[i])
                 {
                     continue;
                 }
@@ -180,8 +180,8 @@ public class Bot : Character
     {
         isAttacking = false;
         IsDead = false;
-        this.gameObject.layer = botLayerNumber;
-        
+        this.gameObject.layer = charLayerNumber;
+
         if (weaponData != null)
         {
             GetRandomWeapon();
@@ -203,25 +203,13 @@ public class Bot : Character
 
         ChangeState(new PatrolState());
 
-        
-}
 
-private void OnDespawn()
+    }
+
+    private void OnDespawn()
     {
-        //LevelManager.Instance.DespawnBot(this);
-        //Transform spawnPoint = GetRandomSpawnPoint();
-
-        //if (spawnPoint != null)
-        //{
-        //    LevelManager.Instance.SpawnSingleBot(spawnPoint);
-        //}
-        //else
-        //{
-        //    Debug.LogError("No valid spawn points available.");
-        //}
-
         LevelManager.Instance.DespawnBot(this);
-        if(LevelManager.Instance.totalPlayers > 25)
+        if (LevelManager.Instance.totalPlayers > 25)
         {
             LevelManager.Instance.SpawnSingleBot();
         }
@@ -238,21 +226,6 @@ private void OnDespawn()
 
     }
 
-    //private Transform GetRandomSpawnPoint()
-    //{
-    //    List<Transform> spawnPoints = LevelManager.Instance.botSpawnPointList;
-
-    //    if (spawnPoints.Count > 0)
-    //    {
-    //        int randomIndex = Random.Range(0, spawnPoints.Count);
-    //        return spawnPoints[randomIndex];
-    //    }
-    //    else
-    //    {
-    //        return null;
-    //    }
-    //}
-
     public void ChangeState(IState<Bot> state)
     {
         if (currentState != null)
@@ -261,8 +234,6 @@ private void OnDespawn()
         }
 
         currentState = state;
-        //IsDead = false;
-        //isAttacking = false;
 
         if (currentState != null)
         {

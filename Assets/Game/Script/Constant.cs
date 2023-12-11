@@ -11,5 +11,8 @@ public class Constant
     public const string ANIM_DANCE = "IsDance";
     public const string ANIM_WIN = "IsWin";
     public const string ANIM_ATTACK = "IsAttack";
+    public const string EQUIP_SKIN = "Equip";
+    public const string OWNED = "Owned";
+    public const string LOCKED = "Locked";
 
 }

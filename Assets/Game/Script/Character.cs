@@ -27,6 +27,7 @@ public class Character : MonoBehaviour
     
     //private BoxCollider bulletCollider;
     protected string currentAnimName = "";
+    protected int charLayerNumber = 3;
     protected int defaultLayerNumber = 0;
     protected int currentKillCount = 0;
     public Transform hatPos;
@@ -38,7 +39,7 @@ public class Character : MonoBehaviour
     public Collider charCollider; //collider giup cho overlapsphere bo qua detect ban than
     protected Weapon weaponInstance;
     public GameObject hatInstance;
-    public GameObject pantInstance;
+    public SkinnedMeshRenderer pantInstance;
 
 
     public GameObject attackRangeCircle;
@@ -53,6 +54,10 @@ public class Character : MonoBehaviour
 
     internal virtual void OnInit()
     {
+        IsDead = false;
+        this.gameObject.layer = charLayerNumber;
+        ChangeAnim(Constant.ANIM_IDLE);
+
         if (weaponData != null)
         {
             ChangeWeapon();
@@ -111,8 +116,13 @@ public class Character : MonoBehaviour
     public void ChangePant()
     {
         pantData = DataManager.Instance.GetPantData((PantType)GameManager.Instance.UserData.EquippedPant);
-        pantInstance.GetComponent<SkinnedMeshRenderer>().material = pantData.PantMaterial;
+        pantInstance.material = pantData.PantMaterial;
         SetCharMoveSpeed();
+    }
+
+    private void ResetScale()
+    {
+        transform.localScale = Vector3.one;
     }
     
     protected void SetCharMoveSpeed()
@@ -132,8 +142,8 @@ public class Character : MonoBehaviour
 
     protected virtual void OnHit()
     {
-        //gameObject.layer = defaultLayerNumber; // set thanh default layer de character k nham, ban toi nua
-        //OnDeath();
+        gameObject.layer = defaultLayerNumber; // set thanh default layer de character k nham, ban toi nua
+        OnDeath();
     }
 
     protected virtual void OnDeath()
@@ -145,8 +155,10 @@ public class Character : MonoBehaviour
 
     protected virtual void OnDespawn()
     {
-        //ResetSize();
-        this.gameObject.SetActive(false);
+        ResetScale();
+        LevelManager.Instance.OnFinish();
+        UIManager.Instance.gameplayUI.SetActive(false);
+        UIManager.Instance.finishGameUI.SetActive(true);
     }
 
     public void ChangeAnim(string animName)

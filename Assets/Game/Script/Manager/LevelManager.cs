@@ -16,7 +16,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private Transform ground;
 
-    public int totalPlayers = 50;
+    public int totalPlayers;
     public FloatingJoystick joystick;
     private Vector3 randomBotSpawnPos;
     
@@ -34,35 +34,33 @@ public class LevelManager : Singleton<LevelManager>
 
     }
 
-    private void LoadLevel()
+    public void LoadLevel()
     {
         //player = Instantiate(playerPrefab);
+        totalPlayers = 50;
         player = playerPrefab;
         player.OnInit();
         player.transform.position = playerSpawnPoint.position;
 
+        DespawnBots();
         SpawnBotsAtStart();
 
     }
 
     public void OnStart()
     {
+        
         GameManager.Instance.ChangeState(GameState.Gameplay);
-        //LoadLevel();
+    }
+
+    public void OnFinish()
+    {
+        GameManager.Instance.ChangeState(GameState.Finish);
+        UIManager.Instance.SetTotalPlayersText();
     }
 
     public void SpawnBotsAtStart()
     {
-        //foreach (Transform spawnPoint in botSpawnPointList)
-        //{
-        //    Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
-        //    //newBot.gameObject.layer = 7;
-        //    newBot.OnInit();
-        //    bots.Add(newBot);
-
-        //}
-
-
         for(int i = 0; i < 25; i++)
         {
             randomBotSpawnPos = new Vector3(UnityEngine.Random.Range(-200, 200), 1, UnityEngine.Random.Range(-200, 200));
@@ -72,12 +70,10 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 
-    //public void SpawnSingleBot(Transform spawnPoint)
-    //{
-    //    Bot newBot = LeanPool.Spawn(botPrefab, spawnPoint.position, spawnPoint.rotation);
-    //    newBot.OnInit();
-    //    bots.Add(newBot);
-    //}
+    public void DespawnBots()
+    {
+        LeanPool.DespawnAll();
+    }
 
     public void SpawnSingleBot()
     {
@@ -100,9 +96,5 @@ public class LevelManager : Singleton<LevelManager>
         {
             Debug.Log("Finished Game!");
         }
-        //else
-        //{
-        //    Debug.LogError("Attempting to despawn a null bot.");
-        //}
     }
 }

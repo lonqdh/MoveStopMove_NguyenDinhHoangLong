@@ -22,6 +22,8 @@ public class SkinShopManager : Singleton<SkinShopManager>
 
     private void Start()
     {
+        currentSession = 3;
+        Debug.Log(currentSession);
         data = GameManager.Instance.UserData;
         hatBtn.onClick.AddListener(ShowHatSkinList);
         pantBtn.onClick.AddListener(ShowPantSkinList);
@@ -36,7 +38,8 @@ public class SkinShopManager : Singleton<SkinShopManager>
         LevelManager.Instance.player.hatInstance.SetActive(true); //bat lai mu~ dang equip
         UIManager.Instance.skinShopUI.SetActive(false);
         UIManager.Instance.mainMenuUI.SetActive(true);
-        currentSession = 2;
+        //currentSession = 2;
+        Debug.Log(currentSession);
     }
 
     public void ShowSkinAvailability(SkinButton skinBtn)
@@ -45,7 +48,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
         {
             if (data.BoughtHats.Contains((int)skinBtn.hatData.hatType))
             {
-                skinPrice.SetText("Equip");
+                skinPrice.SetText(Constant.EQUIP_SKIN);
             }
             else
             {
@@ -56,7 +59,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
         {
             if (data.BoughtPants.Contains((int)skinBtn.pantData.PantType))
             {
-                skinPrice.SetText("Equip");
+                skinPrice.SetText(Constant.EQUIP_SKIN);
             }
             else
             {
@@ -95,7 +98,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
             }
         }
 
-        if (skinPrice.text == "Equip")
+        if (skinPrice.text == Constant.EQUIP_SKIN)
         {
             if (currentSession == 1)
             {
@@ -124,6 +127,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
         }
 
         currentSession = 0;
+        Debug.Log(currentSession);
         SkinShopContent.Instance.DespawnHat();
         SkinShopContent.Instance.SpawnSkin();
 
@@ -137,6 +141,7 @@ public class SkinShopManager : Singleton<SkinShopManager>
         }
 
         currentSession = 1;
+        Debug.Log(currentSession);
         SkinShopContent.Instance.SpawnSkin();
 
     }

@@ -40,7 +40,7 @@ public class ShopManager : Singleton<ShopManager>
         SetWeaponsAvailability(currentWeapShownIndex);
     }
 
-    private void showWeapon(/*int weaponIndex*/ WeaponType currentWeaponType)
+    private void showWeapon(WeaponType currentWeaponType)
     {
         if(weaponModel == null)
         {
@@ -64,12 +64,12 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (data.BoughtWeapons.Contains((int)currentWeaponType))
         {
-            weaponAvailability.SetText("Owned");
-            weaponPrice.SetText("Equip");
+            weaponAvailability.SetText(Constant.OWNED);
+            weaponPrice.SetText(Constant.EQUIP_SKIN);
         }
         else
         {
-            weaponAvailability.SetText("Locked");
+            weaponAvailability.SetText(Constant.LOCKED);
         }
     }
 
@@ -84,7 +84,7 @@ public class ShopManager : Singleton<ShopManager>
             SaveManager.Instance.SaveData(data);
             currentCoinLeft.SetText(data.CurrentCoins.ToString());
         }
-        if (weaponPrice.text == "Equip")
+        if (weaponPrice.text == Constant.EQUIP_SKIN)
         {
             data.EquippedWeapon = (int)currentWeapShownIndex;
             SaveManager.Instance.SaveData(data);
@@ -107,10 +107,6 @@ public class ShopManager : Singleton<ShopManager>
         if ((int)currentWeapShownIndex == 2)
         {
             currentWeapShownIndex = (WeaponType)0;
-
-            //weaponName.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].weaponType.ToString());
-            //weaponPrice.SetText(WeaponDataSO.weaponDataList[currentWeapShownIndex].price.ToString());
-
             showWeapon(currentWeapShownIndex);
 
         }
