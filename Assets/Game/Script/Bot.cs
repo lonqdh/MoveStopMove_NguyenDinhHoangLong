@@ -178,7 +178,6 @@ public class Bot : Character
 
     internal override void OnInit()
     {
-        //base.OnInit();
         isAttacking = false;
         IsDead = false;
         this.gameObject.layer = botLayerNumber;
@@ -199,6 +198,8 @@ public class Bot : Character
         {
             GetRandomPant();
         }
+
+        ScaleAttackRangeCircle();
 
         ChangeState(new PatrolState());
 

@@ -62,7 +62,6 @@ public class SkinButton : MonoBehaviour
             LevelManager.Instance.player.pantInstance.GetComponent<SkinnedMeshRenderer>().material = this.pantData.PantMaterial;
             SkinShopManager.Instance.ShowSkinAvailability(this);
             SkinShopContent.Instance.SetCurrentPantSelected(this); // set current pant selected
-            //SkinShopContent.Instance.pantList.Add(previewPant);
         }
 
     }

@@ -16,10 +16,6 @@ public class SkinShopContent : Singleton<SkinShopContent>
     public HatType currentHatType;
     public PantType currentPantType;
 
-    private void Start()
-    {
-        //SpawnHatSkin();
-    }
 
     public void SpawnSkin()
     {

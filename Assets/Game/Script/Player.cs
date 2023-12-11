@@ -12,10 +12,6 @@ public class Player : Character
     [SerializeField] private Rigidbody rigidbody;
     private Vector3 moveVector;
     private bool hasInit;
-    //private List<Collider> hitColliders = new List<Collider>();
-    public GameObject attackRangeCircle;
-
-    //public Transform nearestEnemy;
 
     private void Start()
     {
@@ -23,8 +19,6 @@ public class Player : Character
         {
             OnInit();
         }
-
-        //rigidbody = GetComponent<Rigidbody>();
     }
 
     protected override void Update() //sau neu lam update o character thi phai override va goi base.Update neu co chuc nang ca bot va nguoi lam
@@ -40,7 +34,7 @@ public class Player : Character
     internal override void OnInit()
     {
         base.OnInit();
-        ScaleAttackRangeCircle();
+        //ScaleAttackRangeCircle();
         joystick = LevelManager.Instance.joystick;
         CameraFollow.Instance.target = transform;
         hasInit = true;
@@ -121,14 +115,7 @@ public class Player : Character
             }
         }
     }
-    public void ScaleAttackRangeCircle()
-    {
-        if (attackRangeCircle != null)
-        {
-            float circleScale = attackRange - 2;
-            attackRangeCircle.transform.localScale = new Vector3(circleScale, circleScale, 1f);
-        }
-    }
+    
 
     //da fix loi k detect duoc enemy. SOLUTION: bat freeze constraint Y cho bot
     //nguyen nhan : ?

@@ -35,18 +35,13 @@ public class Character : MonoBehaviour
     public Transform throwPoint;
     public bool IsDead = false;
     public LayerMask enemyLayer;
-    public Collider charCollider;
+    public Collider charCollider; //collider giup cho overlapsphere bo qua detect ban than
     protected Weapon weaponInstance;
     public GameObject hatInstance;
     public GameObject pantInstance;
 
 
-
-
-    protected virtual void Start()
-    {
-        //OnInit();
-    }
+    public GameObject attackRangeCircle;
 
     protected virtual void Update()
     {
@@ -74,6 +69,8 @@ public class Character : MonoBehaviour
         {
             ChangePant();
         }
+
+        ScaleAttackRangeCircle();
     }
 
    
@@ -241,6 +238,15 @@ public class Character : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
+        }
+    }
+
+    public void ScaleAttackRangeCircle()
+    {
+        if (attackRangeCircle != null)
+        {
+            float circleScale = attackRange - 2;
+            attackRangeCircle.transform.localScale = new Vector3(circleScale, circleScale, 1f);
         }
     }
 
