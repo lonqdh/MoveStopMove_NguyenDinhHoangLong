@@ -14,7 +14,6 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] public Transform planeTransform;
     //[SerializeField] public List<Transform> botSpawnPointList;
     [SerializeField] private Transform playerSpawnPoint;
-    [SerializeField] private Transform ground;
 
     public int totalPlayers;
     public FloatingJoystick joystick;
@@ -41,22 +40,25 @@ public class LevelManager : Singleton<LevelManager>
         player = playerPrefab;
         player.OnInit();
         player.transform.position = playerSpawnPoint.position;
-
         DespawnBots();
         SpawnBotsAtStart();
+    }
 
+    public void RetryLevel()
+    {
+        LoadLevel();
+        OnStart();
     }
 
     public void OnStart()
     {
-        
         GameManager.Instance.ChangeState(GameState.Gameplay);
     }
 
     public void OnFinish()
     {
         GameManager.Instance.ChangeState(GameState.Finish);
-        UIManager.Instance.SetTotalPlayersText();
+        UIManager.Instance.OpenFinishUI();
     }
 
     public void SpawnBotsAtStart()
@@ -95,6 +97,68 @@ public class LevelManager : Singleton<LevelManager>
         else if(totalPlayers == 0)
         {
             Debug.Log("Finished Game!");
+            OnFinish();
         }
     }
 }
+
+
+//public class LevelManager : Singleton<LevelManager>
+//{
+//    public List<Level> levels = new List<Level>();
+//    public Player player;
+//    Level currentLevel;
+
+//    int level = 1;
+
+//    private void Start()
+//    {
+//        UIManager.Instance.OpenMainMenuUI();
+//        LoadLevel();
+//    }
+
+//    public void LoadLevel()
+//    {
+//        LoadLevel(level);
+//        OnInit();
+//    }
+
+//    public void LoadLevel(int indexLevel)
+//    {
+//        if (currentLevel != null)
+//        {
+//            Destroy(currentLevel.gameObject);
+//            //foreach(var bricks in player.brickList)
+//            //{
+//            //    Destroy(bricks.gameObject);
+//            //}
+//        }
+
+//        currentLevel = Instantiate(levels[indexLevel - 1]);
+//    }
+
+//    public void OnInit()
+//    {
+//        player.transform.position = currentLevel.startPoint.position;
+//        player.OnInit();
+//    }
+
+//    public void OnStart()
+//    {
+//        GameManager.Instance.ChangeState(GameState.Gameplay);
+//    }
+
+//    public void OnFinish()
+//    {
+//        UIManager.Instance.OpenFinishUI();
+//        GameManager.Instance.ChangeState(GameState.Finish);
+//    }
+
+//    public void NextLevel()
+//    {
+//        level++;
+//        LoadLevel();
+//    }
+
+
+//}

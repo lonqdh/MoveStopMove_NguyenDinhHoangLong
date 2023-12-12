@@ -14,5 +14,10 @@ public class Constant
     public const string EQUIP_SKIN = "Equip";
     public const string OWNED = "Owned";
     public const string LOCKED = "Locked";
+    public const string NEXT_LEVEL = "Next Level";
+    public const string WIN = "You Won!";
+    public const string RETRY = "Retry";
+    public const string GAMEOVER = "Game Over";
+
 
 }

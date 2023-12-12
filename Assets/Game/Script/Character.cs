@@ -109,6 +109,7 @@ public class Character : MonoBehaviour
         {
             Destroy(hatInstance.gameObject);
             hatInstance = Instantiate(hatData.hatPrefab, hatPos);
+            hatInstance.SetActive(true);
         }
         SetAttackRange();
     }
@@ -149,6 +150,7 @@ public class Character : MonoBehaviour
     protected virtual void OnDeath()
     {
         IsDead = true;
+        Debug.Log(IsDead);
         ChangeAnim(Constant.ANIM_DIE);
         Invoke(nameof(OnDespawn), 2f);
     }
@@ -157,8 +159,6 @@ public class Character : MonoBehaviour
     {
         ResetScale();
         LevelManager.Instance.OnFinish();
-        UIManager.Instance.gameplayUI.SetActive(false);
-        UIManager.Instance.finishGameUI.SetActive(true);
     }
 
     public void ChangeAnim(string animName)

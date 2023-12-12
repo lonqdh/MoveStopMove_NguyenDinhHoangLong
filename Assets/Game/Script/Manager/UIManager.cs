@@ -19,8 +19,11 @@ public class UIManager : Singleton<UIManager>
     public Button weaponBtn;
     public Button skinBtn;
     public TextMeshProUGUI coinText;
+    public TextMeshProUGUI finishLabel;
+    public TextMeshProUGUI finishBtnText;
     public TextMeshProUGUI playersLeft;
     private int numOfPlayers = 50;
+    private bool finishGame;
     //private int numOfPlayersLeft;
 
 
@@ -44,9 +47,45 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.ChangeState(GameState.MainMenu);
     }
 
+    public void OpenFinishUI()
+    {
+        SetTotalPlayersText();
+        SetFinishGameState();
+        gameplayUI.SetActive(false);
+        finishGameUI.SetActive(true);
+    }
+
+    public void SetFinishGameState()
+    {
+        if(LevelManager.Instance.player.IsDead)
+        {
+            finishLabel.SetText(Constant.GAMEOVER);
+            finishBtnText.SetText(Constant.RETRY);
+            finishGame = false;
+        }
+        else
+        {
+            finishLabel.SetText(Constant.WIN);
+            finishBtnText.SetText(Constant.NEXT_LEVEL);
+            finishGame = true;
+
+        }
+    }
+
     private void FinishGame()
     {
-        
+        if(finishGame == true)
+        {
+            //test
+            Debug.Log("You Finished The Level!");
+        }
+        else
+        {
+            Debug.Log("You Chose To Retry");
+            finishGameUI.SetActive(false);
+            gameplayUI.SetActive(true);
+            LevelManager.Instance.RetryLevel();
+        }
     }
 
     public void StartGame()
@@ -79,7 +118,7 @@ public class UIManager : Singleton<UIManager>
 
     private void ChangeUI(CanvasGroup on, CanvasGroup off)
     {
-        on.interactable = on; 
+        on.interactable = on;
         off.interactable = off;
         on.gameObject.SetActive(true);
         on.gameObject.SetActive(false);

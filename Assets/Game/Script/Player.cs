@@ -90,7 +90,6 @@ public class Player : Character
                     continue;
                 }
                 float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
-                Debug.Log("Detected enemy: " + hitColliders[i].gameObject.name);
 
                 if (distance < attackRange)
                 {
