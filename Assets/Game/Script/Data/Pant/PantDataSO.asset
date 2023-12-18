@@ -17,7 +17,7 @@ MonoBehaviour:
     PantMaterial: {fileID: 2100000, guid: c8682f4b2ef0eec4b8f0edd1dd23511c, type: 2}
     PantImage: {fileID: 21300000, guid: e4d349a1e99479b42882cbf208c4e894, type: 3}
     PantPrice: 0
-    Speed: 2
+    Speed: 5
   - PantType: 1
     PantMaterial: {fileID: 2100000, guid: 4451379e4c7b0384ca8812f6dab6ad42, type: 2}
     PantImage: {fileID: 21300000, guid: 47c8d5358d60d474388d6a7e89a221aa, type: 3}
@@ -27,29 +27,29 @@ MonoBehaviour:
     PantMaterial: {fileID: 2100000, guid: 19ab7abac52db5e45b12fda3e1678d79, type: 2}
     PantImage: {fileID: 21300000, guid: 60bbae7447731bc4f8f7921a7b846832, type: 3}
     PantPrice: 250
-    Speed: 2.5
+    Speed: 5
   - PantType: 3
     PantMaterial: {fileID: 2100000, guid: f44a06baa6a926f46ac1095f7e751773, type: 2}
     PantImage: {fileID: 21300000, guid: e6cdcdd7f2a0d8b4fb11ca94d0d7d775, type: 3}
     PantPrice: 300
-    Speed: 3
+    Speed: 5
   - PantType: 4
     PantMaterial: {fileID: 2100000, guid: 24bae78f2b5d35d49ab521532acc67e5, type: 2}
     PantImage: {fileID: 21300000, guid: e119361a0d7fd344eb37842037719c31, type: 3}
     PantPrice: 400
-    Speed: 4
+    Speed: 5
   - PantType: 5
     PantMaterial: {fileID: 2100000, guid: 3ff0942d8d8547a4ea7667f7df5dc42a, type: 2}
     PantImage: {fileID: 21300000, guid: f5d61e52e0c02c7499cc3e23eb8c7f3f, type: 3}
     PantPrice: 750
-    Speed: 7.5
+    Speed: 5
   - PantType: 6
     PantMaterial: {fileID: 2100000, guid: 18433c8b413d68a4d82741143899cfba, type: 2}
     PantImage: {fileID: 21300000, guid: 006435c12055ced4384c81603df71e0e, type: 3}
     PantPrice: 950
-    Speed: 9.5
+    Speed: 5
   - PantType: 7
     PantMaterial: {fileID: 2100000, guid: 1a6f8498e8567fc4388d4aa977da7ddc, type: 2}
     PantImage: {fileID: 21300000, guid: e97fa78b135de6144a5983996978204a, type: 3}
     PantPrice: 1200
-    Speed: 12
+    Speed: 5

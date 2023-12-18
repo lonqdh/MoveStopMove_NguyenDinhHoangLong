@@ -9104,8 +9104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botPrefab: {fileID: -8695420339889194576, guid: 790a7ba9468269f40978cf6228a6cd9d, type: 3}
   playerPrefab: {fileID: 1305422170}
-  planeTransform: {fileID: 0}
-  playerSpawnPoint: {fileID: 0}
+  levelDataSO: {fileID: 11400000, guid: 6ad22331f85ab0944bc9dbc7ae2861f9, type: 2}
   totalPlayers: 50
   joystick: {fileID: 2094654466}
 --- !u!1 &1999845192

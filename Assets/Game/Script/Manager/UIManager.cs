@@ -57,34 +57,37 @@ public class UIManager : Singleton<UIManager>
 
     public void SetFinishGameState()
     {
-        if(LevelManager.Instance.player.IsDead)
+        if(LevelManager.Instance.finishedLevel != true)
         {
             finishLabel.SetText(Constant.GAMEOVER);
             finishBtnText.SetText(Constant.RETRY);
-            finishGame = false;
+            //finishGame = false;
         }
         else
         {
             finishLabel.SetText(Constant.WIN);
             finishBtnText.SetText(Constant.NEXT_LEVEL);
-            finishGame = true;
-
+            //finishGame = true;
         }
     }
 
     private void FinishGame()
     {
-        if(finishGame == true)
+        if(LevelManager.Instance.finishedLevel == true)
         {
             //test
-            Debug.Log("You Finished The Level!");
+            //LevelManager.Instance.LoadLevel();
+            LevelManager.Instance.LevelStart();
+            finishGameUI.SetActive(false);
+            gameplayUI.SetActive(true);
+            Debug.Log("You Finished And Moved To Next Level!");
         }
         else
         {
             Debug.Log("You Chose To Retry");
             finishGameUI.SetActive(false);
             gameplayUI.SetActive(true);
-            LevelManager.Instance.RetryLevel();
+            LevelManager.Instance.LevelStart();
         }
     }
 

@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31b775b9a5dcfda45ab85fd7bdf7a820, type: 2}
+  - {fileID: 2100000, guid: fc6b6ca48c98ceb4ab43c2e354117286, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 16202878031618359}
   - component: {fileID: -5702549342181680950}
   m_Layer: 0
-  m_Name: Level1Environment
+  m_Name: Level2Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145a6d9c679c8b244a8787013ca7788e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelId: 0
+  levelId: 1
   levelEnvironment: {fileID: 6998269904620122761}
   playerSpawnPoint: {fileID: 6885005899924827735}
 --- !u!1001 &6825734168584148791

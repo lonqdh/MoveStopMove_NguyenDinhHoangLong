@@ -16,40 +16,40 @@ MonoBehaviour:
   - hatType: 1
     hatPrefab: {fileID: 1894137332924221703, guid: d2a749afddf98ff4c833814f219b2d50, type: 3}
     hatImage: {fileID: 21300000, guid: e9d74ae5354952044bdef259b76624bc, type: 3}
-    range: 5
+    range: 2
     hatPrice: 100
   - hatType: 2
     hatPrefab: {fileID: 3318394900210075361, guid: ea72a6ad06489cb408a802e86b224f26, type: 3}
     hatImage: {fileID: 21300000, guid: 01ebcf0cde7e5244c825ab2eca068786, type: 3}
-    range: 6
+    range: 3
     hatPrice: 300
   - hatType: 3
     hatPrefab: {fileID: 5518513908185173322, guid: 7748eb79671f50e4781270f733b21dfd, type: 3}
     hatImage: {fileID: 21300000, guid: 5e3bfe009738a5e418e475851c6122d0, type: 3}
-    range: 8
+    range: 3
     hatPrice: 500
   - hatType: 4
     hatPrefab: {fileID: 6647956868681818861, guid: aca236bb828ac0a49811acd4d62ed326, type: 3}
     hatImage: {fileID: 21300000, guid: b3518d4e485add944b1fa93656e951d3, type: 3}
-    range: 10
+    range: 2
     hatPrice: 1000
   - hatType: 5
     hatPrefab: {fileID: 7049087457625196314, guid: aa7e744fe0a63fd44a297ec11fc913fd, type: 3}
     hatImage: {fileID: 21300000, guid: 759595004aac5ab4faae9679c69cea13, type: 3}
-    range: 12
+    range: 5
     hatPrice: 1500
   - hatType: 6
     hatPrefab: {fileID: 5749653816667408133, guid: 634c76e3dc795814ea0214f982df96eb, type: 3}
     hatImage: {fileID: 21300000, guid: 16c1b5207b0f4bf4aa8307bcdbfeabe9, type: 3}
-    range: 15
+    range: 3
     hatPrice: 2500
   - hatType: 7
     hatPrefab: {fileID: 8337600658624018725, guid: 4afcc4d11bc525b48843e57afb11d439, type: 3}
     hatImage: {fileID: 21300000, guid: 60e4948c16ca9d343a410f06b6fce846, type: 3}
-    range: 20
+    range: 3
     hatPrice: 5000
   - hatType: 8
     hatPrefab: {fileID: 831614502856034357, guid: be16a94772b319b44ba94c11f8df7cea, type: 3}
     hatImage: {fileID: 21300000, guid: 791117d599ecff543b9d1db51b1873d6, type: 3}
-    range: 20
+    range: 3
     hatPrice: 5500

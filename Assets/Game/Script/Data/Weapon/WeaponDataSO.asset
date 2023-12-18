@@ -16,18 +16,18 @@ MonoBehaviour:
   - weaponType: 0
     weapon: {fileID: -7358084803491230798, guid: e65d1021f00cb6344a8b62d15c40961d, type: 3}
     bullet: {fileID: 7546021061011114430, guid: 0d99b6d25cf911b41ba7adeec1ad84c0, type: 3}
-    autoAttackRange: 5
+    autoAttackRange: 2
     attackSpeed: 5
     price: 0
   - weaponType: 1
     weapon: {fileID: -55799238421797015, guid: 681c62e9d8147d64c8d34921c3788a88, type: 3}
     bullet: {fileID: -7386624029875195808, guid: 0548d36ce9d50d94b8bc5bf67bb20dd2, type: 3}
-    autoAttackRange: 10
+    autoAttackRange: 6
     attackSpeed: 10
     price: 500
   - weaponType: 2
     weapon: {fileID: 4206937529199093107, guid: 8164bdf695ee47d439879ef5b9d4649e, type: 3}
     bullet: {fileID: 5443685569351275158, guid: 09b89d401a3c51f438397558ee1f6174, type: 3}
-    autoAttackRange: 8
+    autoAttackRange: 5
     attackSpeed: 12
     price: 200

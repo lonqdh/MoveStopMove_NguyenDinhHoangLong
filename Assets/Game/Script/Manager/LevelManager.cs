@@ -8,16 +8,20 @@ public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] public Bot botPrefab;
     [SerializeField] private Player playerPrefab;
+    [NonSerialized] public Level levelPrefab;
     [NonSerialized] public Player player;
     [NonSerialized] public List<Bot> bots = new List<Bot>();
 
-    [SerializeField] public Transform planeTransform;
+    //[SerializeField] public Transform planeTransform;
     //[SerializeField] public List<Transform> botSpawnPointList;
-    [SerializeField] private Transform playerSpawnPoint;
-
+    //[SerializeField] private Transform playerSpawnPoint;
+    [SerializeField] private LevelDataSO levelDataSO;
     public int totalPlayers;
     public FloatingJoystick joystick;
     private Vector3 randomBotSpawnPos;
+    private Level currentLevel;
+    private int levelCount;
+    public bool finishedLevel = false;
     
 
 
@@ -27,24 +31,56 @@ public class LevelManager : Singleton<LevelManager>
         LoadLevel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void LoadLevel()
     {
+        List<Level> levels = levelDataSO.listLevels;
+        if(currentLevel != null)
+        {
+            Destroy(currentLevel.gameObject);
+        }
+        if(finishedLevel == true)
+        {
+            currentLevel = Instantiate(levels[1]);
+        }
+        else
+        {
+            currentLevel = Instantiate(levels[0]);
+        }
+
+        //Debug.Log("Load level " + levelCount);
+        //currentLevel = Instantiate(levels[levelCount]);
+
+
+        //levelPrefab = levelDataSO.listLevels[level];
+        //currentLevel = levelPrefab;
+        //level = currentLevel.levelId;
+        //Instantiate(levelPrefab);
+        //LeanPool.Spawn(currentLevel.levelEnvironment);
+        //currentLevel = Resources.Load(levelDataSO.listLevels[level]);
+
         //player = Instantiate(playerPrefab);
+        //if (currentLevel != null)
+        //{
+        //    Destroy(currentLevel.gameObject);
+        //    //foreach(var bricks in player.brickList)
+        //    //{
+        //    //    Destroy(bricks.gameObject);
+        //    //}
+        //}
+        //currentLevel = Instantiate(levels[indexLevel - 1]);
+
+
+
         totalPlayers = 50;
         player = playerPrefab;
         player.OnInit();
-        player.transform.position = playerSpawnPoint.position;
+        player.transform.position = currentLevel.playerSpawnPoint.position;
         DespawnBots();
         SpawnBotsAtStart();
     }
 
-    public void RetryLevel()
+    public void LevelStart()
     {
         LoadLevel();
         OnStart();
@@ -63,7 +99,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void SpawnBotsAtStart()
     {
-        for(int i = 0; i < 25; i++)
+        for(int i = 0; i < totalPlayers/2; i++)
         {
             randomBotSpawnPos = new Vector3(UnityEngine.Random.Range(-200, 200), 1, UnityEngine.Random.Range(-200, 200));
             Bot newBot = LeanPool.Spawn(botPrefab, randomBotSpawnPos, Quaternion.identity);
@@ -94,9 +130,10 @@ public class LevelManager : Singleton<LevelManager>
             totalPlayers--;
             UIManager.Instance.SetTotalPlayersText();
         }
-        else if(totalPlayers == 0)
+        else if (totalPlayers == 0)
         {
             Debug.Log("Finished Game!");
+            finishedLevel = true;
             OnFinish();
         }
     }

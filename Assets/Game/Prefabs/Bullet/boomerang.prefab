@@ -30,43 +30,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.604859
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.9728229
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 49.548126
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5918725
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.5463198
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.40166423
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.43576086
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 94.612
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -179.529
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -106.841
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -103,12 +103,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67431c450ea9cd94892da284a30f08c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  despawnDelay: 2
+  rotatespeed: 180
   rb: {fileID: -6482037458067738398}
   attacker: {fileID: 0}
   bulletCollider: {fileID: 7203388399502832777}
   bulletRigidbody: {fileID: -6482037458067738398}
-  rotatespeed: 180
-  despawnDelay: 2
 --- !u!64 &7203388399502832777
 MeshCollider:
   m_ObjectHideFlags: 0

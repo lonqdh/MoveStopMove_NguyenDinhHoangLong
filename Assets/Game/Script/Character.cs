@@ -29,7 +29,7 @@ public class Character : MonoBehaviour
     protected string currentAnimName = "";
     protected int charLayerNumber = 3;
     protected int defaultLayerNumber = 0;
-    protected int currentKillCount = 0;
+    public int currentKillCount = 0;
     public Transform hatPos;
     public float charScale = 1;
     public Bullet bulletPrefab;
@@ -158,6 +158,7 @@ public class Character : MonoBehaviour
     protected virtual void OnDespawn()
     {
         ResetScale();
+        LevelManager.Instance.finishedLevel = false;
         LevelManager.Instance.OnFinish();
     }
 
@@ -207,6 +208,8 @@ public class Character : MonoBehaviour
             // Set the cooldown timer
             lastAutoAttackTime = Time.time;
         }
+
+
     }
 
     public virtual void Grow()
