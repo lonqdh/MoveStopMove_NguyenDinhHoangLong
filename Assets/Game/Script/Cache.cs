@@ -15,4 +15,6 @@ public class Cache : MonoBehaviour
 
         return characters[collider];
     }
+
+    //khi next level can clear dictionary neu k no van con, va voi dictionary minh k lay tat ca minh set layer
 }

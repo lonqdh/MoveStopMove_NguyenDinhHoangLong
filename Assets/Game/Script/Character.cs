@@ -17,18 +17,17 @@ public class Character : MonoBehaviour
     [SerializeField] internal PantData pantData;
     [SerializeField] internal HatData hatData;
     [NonSerialized] protected float lastAutoAttackTime;
-    public float attackRange;
+    
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float rotateSpeed;
     [SerializeField] protected float attackSpeed;
-
-
     [SerializeField] private float growthFactor = 1.2f;
     
     //private BoxCollider bulletCollider;
     protected string currentAnimName = "";
     protected int charLayerNumber = 3;
     protected int defaultLayerNumber = 0;
+    protected Weapon weaponInstance;
     public int currentKillCount = 0;
     public Transform hatPos;
     public float charScale = 1;
@@ -37,9 +36,10 @@ public class Character : MonoBehaviour
     public bool IsDead = false;
     public LayerMask enemyLayer;
     public Collider charCollider; //collider giup cho overlapsphere bo qua detect ban than
-    protected Weapon weaponInstance;
     public GameObject hatInstance;
     public SkinnedMeshRenderer pantInstance;
+    public float attackRange;
+    public Character killer;
 
 
     public GameObject attackRangeCircle;
@@ -181,6 +181,7 @@ public class Character : MonoBehaviour
                 return;
             }
 
+            killer = other.GetComponent<Bullet>().attacker;
             OnHit();
         }
     }

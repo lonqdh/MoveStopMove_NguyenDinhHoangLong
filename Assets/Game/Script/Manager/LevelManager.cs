@@ -20,7 +20,7 @@ public class LevelManager : Singleton<LevelManager>
     public FloatingJoystick joystick;
     private Vector3 randomBotSpawnPos;
     private Level currentLevel;
-    private int levelCount;
+    public int levelCount;
     public bool finishedLevel = false;
     
 
@@ -39,38 +39,8 @@ public class LevelManager : Singleton<LevelManager>
         {
             Destroy(currentLevel.gameObject);
         }
-        if(finishedLevel == true)
-        {
-            currentLevel = Instantiate(levels[1]);
-        }
-        else
-        {
-            currentLevel = Instantiate(levels[0]);
-        }
-
-        //Debug.Log("Load level " + levelCount);
-        //currentLevel = Instantiate(levels[levelCount]);
-
-
-        //levelPrefab = levelDataSO.listLevels[level];
-        //currentLevel = levelPrefab;
-        //level = currentLevel.levelId;
-        //Instantiate(levelPrefab);
-        //LeanPool.Spawn(currentLevel.levelEnvironment);
-        //currentLevel = Resources.Load(levelDataSO.listLevels[level]);
-
-        //player = Instantiate(playerPrefab);
-        //if (currentLevel != null)
-        //{
-        //    Destroy(currentLevel.gameObject);
-        //    //foreach(var bricks in player.brickList)
-        //    //{
-        //    //    Destroy(bricks.gameObject);
-        //    //}
-        //}
-        //currentLevel = Instantiate(levels[indexLevel - 1]);
-
-
+        
+        currentLevel = Instantiate(levels[levelCount]);
 
         totalPlayers = 50;
         player = playerPrefab;
@@ -123,14 +93,15 @@ public class LevelManager : Singleton<LevelManager>
 
     public void DespawnBot(Bot bot)
     {
-        if (bot != null && bots.Contains(bot) && totalPlayers > 0)
+        if (bot != null && bots.Contains(bot) && totalPlayers >= 49)
         {
             bots.Remove(bot);
             LeanPool.Despawn(bot);
             totalPlayers--;
+            Debug.Log(totalPlayers);
             UIManager.Instance.SetTotalPlayersText();
         }
-        else if (totalPlayers == 0)
+        else
         {
             Debug.Log("Finished Game!");
             finishedLevel = true;
@@ -139,63 +110,5 @@ public class LevelManager : Singleton<LevelManager>
     }
 }
 
+//bug : sau khi next level thi nhan vat van di chuyen tu map cu~
 
-//public class LevelManager : Singleton<LevelManager>
-//{
-//    public List<Level> levels = new List<Level>();
-//    public Player player;
-//    Level currentLevel;
-
-//    int level = 1;
-
-//    private void Start()
-//    {
-//        UIManager.Instance.OpenMainMenuUI();
-//        LoadLevel();
-//    }
-
-//    public void LoadLevel()
-//    {
-//        LoadLevel(level);
-//        OnInit();
-//    }
-
-//    public void LoadLevel(int indexLevel)
-//    {
-//        if (currentLevel != null)
-//        {
-//            Destroy(currentLevel.gameObject);
-//            //foreach(var bricks in player.brickList)
-//            //{
-//            //    Destroy(bricks.gameObject);
-//            //}
-//        }
-
-//        currentLevel = Instantiate(levels[indexLevel - 1]);
-//    }
-
-//    public void OnInit()
-//    {
-//        player.transform.position = currentLevel.startPoint.position;
-//        player.OnInit();
-//    }
-
-//    public void OnStart()
-//    {
-//        GameManager.Instance.ChangeState(GameState.Gameplay);
-//    }
-
-//    public void OnFinish()
-//    {
-//        UIManager.Instance.OpenFinishUI();
-//        GameManager.Instance.ChangeState(GameState.Finish);
-//    }
-
-//    public void NextLevel()
-//    {
-//        level++;
-//        LoadLevel();
-//    }
-
-
-//}

@@ -22,6 +22,13 @@ public class UIManager : Singleton<UIManager>
     public TextMeshProUGUI finishLabel;
     public TextMeshProUGUI finishBtnText;
     public TextMeshProUGUI playersLeft;
+    public TextMeshProUGUI killerName;
+    public TextMeshProUGUI rankLabel;
+    public GameObject lostPanel;
+    public GameObject wonPanel;
+
+
+
     private int numOfPlayers = 50;
     private bool finishGame;
     //private int numOfPlayersLeft;
@@ -49,7 +56,7 @@ public class UIManager : Singleton<UIManager>
 
     public void OpenFinishUI()
     {
-        SetTotalPlayersText();
+        //SetTotalPlayersText();
         SetFinishGameState();
         gameplayUI.SetActive(false);
         finishGameUI.SetActive(true);
@@ -61,12 +68,18 @@ public class UIManager : Singleton<UIManager>
         {
             finishLabel.SetText(Constant.GAMEOVER);
             finishBtnText.SetText(Constant.RETRY);
+            rankLabel.SetText("#" + LevelManager.Instance.totalPlayers.ToString());
+            killerName.SetText(LevelManager.Instance.player.killer.name);
+            wonPanel.SetActive(false);
+            lostPanel.SetActive(true);
             //finishGame = false;
         }
         else
         {
             finishLabel.SetText(Constant.WIN);
             finishBtnText.SetText(Constant.NEXT_LEVEL);
+            lostPanel.SetActive(false);
+            wonPanel.SetActive(true);
             //finishGame = true;
         }
     }
@@ -75,12 +88,13 @@ public class UIManager : Singleton<UIManager>
     {
         if(LevelManager.Instance.finishedLevel == true)
         {
-            //test
-            //LevelManager.Instance.LoadLevel();
-            LevelManager.Instance.LevelStart();
+            LevelManager.Instance.levelCount++;
+            LevelManager.Instance.finishedLevel = false;
             finishGameUI.SetActive(false);
             gameplayUI.SetActive(true);
             Debug.Log("You Finished And Moved To Next Level!");
+            LevelManager.Instance.LevelStart();
+            SetTotalPlayersText();
         }
         else
         {
@@ -88,6 +102,7 @@ public class UIManager : Singleton<UIManager>
             finishGameUI.SetActive(false);
             gameplayUI.SetActive(true);
             LevelManager.Instance.LevelStart();
+            SetTotalPlayersText();
         }
     }
 

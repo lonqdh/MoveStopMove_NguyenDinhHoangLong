@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class Player : Character
 {
-    [SerializeField] private FloatingJoystick joystick;
+    [SerializeField] public FloatingJoystick joystick;
     [SerializeField] private Rigidbody rigidbody;
     private Vector3 moveVector;
     private bool hasInit;
@@ -23,7 +23,7 @@ public class Player : Character
 
     protected override void Update() //sau neu lam update o character thi phai override va goi base.Update neu co chuc nang ca bot va nguoi lam
     {
-        if (hasInit && IsDead == false)
+        if (hasInit && IsDead == false && GameManager.Instance.IsState(GameState.Gameplay))
         {
             //base.Update();
             Move();
