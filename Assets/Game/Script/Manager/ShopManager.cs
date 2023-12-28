@@ -12,6 +12,7 @@ public class ShopManager : Singleton<ShopManager>
     public TextMeshProUGUI weaponName;
     public TextMeshProUGUI weaponPrice;
     public TextMeshProUGUI weaponAvailability;
+    public TextMeshProUGUI weaponStats;
     public TextMeshProUGUI currentCoinLeft;
     public Button NextWeapInShopBtn;
     public Button PrevWeapInShopBtn;
@@ -48,6 +49,7 @@ public class ShopManager : Singleton<ShopManager>
             weaponModel.transform.parent = weaponShopPosition;
             weaponName.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].weaponType.ToString());
             weaponPrice.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].price.ToString());
+            weaponStats.SetText("+" + WeaponDataSO.weaponDataList[(int)currentWeaponType].attackSpeed.ToString() + " AtkSpeed" + " +" + WeaponDataSO.weaponDataList[(int)currentWeaponType].autoAttackRange.ToString() + "AtkRange");
         }
         else
         {
@@ -56,6 +58,7 @@ public class ShopManager : Singleton<ShopManager>
             weaponModel.transform.parent = weaponShopPosition;
             weaponName.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].weaponType.ToString());
             weaponPrice.SetText(WeaponDataSO.weaponDataList[(int)currentWeaponType].price.ToString());
+            weaponStats.SetText("+" + WeaponDataSO.weaponDataList[(int)currentWeaponType].attackSpeed.ToString() + " AtkSpeed" + " +" + WeaponDataSO.weaponDataList[(int)currentWeaponType].autoAttackRange.ToString() + "AtkRange");
         }
         
     }

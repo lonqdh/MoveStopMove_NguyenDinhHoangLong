@@ -29,12 +29,12 @@ public class SkinButton : MonoBehaviour
         if (/*SkinShopManager.Instance.currentSession != 1*/ this.pantData != null)
         {
             SkinShopManager.Instance.skinPrice.SetText(this.pantData.PantPrice.ToString());
-            SkinShopManager.Instance.skinStats.SetText("+" + this.pantData.Speed.ToString());
+            SkinShopManager.Instance.skinStats.SetText("+" + this.pantData.Speed.ToString() + " MoveSpeed");
         }
         else
         {
             SkinShopManager.Instance.skinPrice.SetText(this.hatData.hatPrice.ToString());
-            SkinShopManager.Instance.skinStats.SetText("+" + this.hatData.range.ToString());
+            SkinShopManager.Instance.skinStats.SetText("+" + this.hatData.range.ToString() + " AtkRange");
             
         }
         

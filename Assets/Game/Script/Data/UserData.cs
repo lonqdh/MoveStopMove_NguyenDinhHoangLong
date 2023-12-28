@@ -46,7 +46,7 @@ public class UserData
         BoughtWeapons.Add(0);
         BoughtHats.Add(1);
         BoughtPants.Add(0);
-        Username = "New Player";
+        Username = "Hoang Long";
     }
 }
 

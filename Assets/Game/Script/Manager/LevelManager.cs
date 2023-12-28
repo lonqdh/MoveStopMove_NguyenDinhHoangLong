@@ -6,16 +6,13 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    [SerializeField] public Bot botPrefab;
     [SerializeField] private Player playerPrefab;
+    [SerializeField] private LevelDataSO levelDataSO;
+    [SerializeField] public Bot botPrefab;
     [NonSerialized] public Level levelPrefab;
     [NonSerialized] public Player player;
     [NonSerialized] public List<Bot> bots = new List<Bot>();
-
-    //[SerializeField] public Transform planeTransform;
-    //[SerializeField] public List<Transform> botSpawnPointList;
-    //[SerializeField] private Transform playerSpawnPoint;
-    [SerializeField] private LevelDataSO levelDataSO;
+    
     public int totalPlayers;
     public FloatingJoystick joystick;
     private Vector3 randomBotSpawnPos;
@@ -93,7 +90,7 @@ public class LevelManager : Singleton<LevelManager>
 
     public void DespawnBot(Bot bot)
     {
-        if (bot != null && bots.Contains(bot) && totalPlayers >= 49)
+        if (bot != null && bots.Contains(bot) && totalPlayers >= 1)
         {
             bots.Remove(bot);
             LeanPool.Despawn(bot);
@@ -109,6 +106,3 @@ public class LevelManager : Singleton<LevelManager>
         }
     }
 }
-
-//bug : sau khi next level thi nhan vat van di chuyen tu map cu~
-
